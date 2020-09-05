@@ -13,7 +13,7 @@ img = {-1001481026778 : "https://i.imgur.com/fQi4wJe.jpg"}
 @borg.on(events.NewMessage)
 async def my_event_handler(event):                     
     global channel_id, msg_id, sticker_delete, footer, img
-    elif channel_id is not None and msg_id is not None and event.chat_id in img.keys():
+    if channel_id is not None and msg_id is not None and event.chat_id in img.keys():
         if event.sticker is not None:
             if sticker_delete:
                 await event.delete()
