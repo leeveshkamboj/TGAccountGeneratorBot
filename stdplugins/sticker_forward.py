@@ -6,7 +6,7 @@ channel_id = -1001481026778
 msg_id = 211
 sticker_delete = False
 footer = "\n\n➖🔰@PandaZnetwork🔰➖"
-img = {-1001481026778 : "https://i.imgur.com/fQi4wJe.jpg"}
+img = {-1001481026778 : "https://i.imgur.com/fQi4wJe.jpg", -1001481899343 : "https://i.imgur.com/DRUnSIc.jpg", -1001122798596 : "https://i.imgur.com/mGgAIbl.jpg"}
 
 
 
