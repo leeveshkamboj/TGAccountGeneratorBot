@@ -30,6 +30,6 @@ async def my_event_handler(event):
                 await event.delete()
             except:
                 pass
-            await borg.forward_messages(channel_id, msg_id, channel_id)
+            await borg.forward_messages(event.chat_id, msg_id, channel_id)
 
 
