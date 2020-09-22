@@ -35,7 +35,7 @@ async def my_event_handler(event):
             return
         else:
             try:
-                if event.chat_id in name.keys() and ("http://" in event.text or "https://" in event.text):
+                if event.chat_id in name.keys() and ("http://" in event.text.lower() or "https://" in event.text.lower()):
                     msg = f'''**__🔰{name[event.chat_id]}[Valid Hits]🔰
 
 🌀 All accounts are working and fresh. We will never give Not working Accounts
