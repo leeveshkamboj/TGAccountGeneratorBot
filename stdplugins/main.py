@@ -16,15 +16,15 @@ async def my_event_handler(event):
     if channel_id is not None and msg_id is not None and event.chat_id in img.keys():
         if event.text == "/stop":
             paused = True
-            event.edit("Bot Stopped.")
+            await event.edit("Bot Stopped.")
             time.sleep(3)
-            event.delete()
+            await event.delete()
             return
         if event.text == "/start":
             paused = False
-            event.edit("Bot Started.")
+            await event.edit("Bot Started.")
             time.sleep(3)
-            event.delete()
+            await event.delete()
             return
         if paused:
             return
