@@ -89,6 +89,8 @@ ENJOY ❤️👍
                             else:
                                 msg = f"**__🔰{multiFullName[name]}🔰__**\n\n" + event.text + footer
                             break
+                    else:
+                        return
                 await event.client.send_message(
                     event.chat_id,
                     msg,
