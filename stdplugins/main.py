@@ -18,7 +18,7 @@ if sticker_delete:
 
 footer = os.environ.get("FOOTER", "")
 if footer:
-    footer = str(footer)
+    footer = "\n\n" + footer
 
 name = {
   -1001481026778: "Express VPN",
