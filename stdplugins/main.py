@@ -36,6 +36,7 @@ multiName = {
       "avast": "https://i.imgur.com/5S4zREv.jpg",
       "bd": "https://i.imgur.com/iBlJ3lf.jpg"
     }
+}
 
 multiFullName = {
   "mc": "McAfee",
