@@ -91,6 +91,9 @@ ENJOY ❤️👍
                             break
                     else:
                         return
+                else:
+                    print(event.chat_id)
+                    return
                 await event.client.send_message(
                     event.chat_id,
                     msg,
