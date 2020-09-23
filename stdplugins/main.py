@@ -11,7 +11,7 @@ img = {-1001481026778 : "https://i.imgur.com/fQi4wJe.jpg", -1001481899343 : "htt
 name = {-1001481026778 : "Express VPN", -1001481899343 : "Windscribe", -1001122798596 : "IP Vanish", -1001251394025 : "Hulu", -1001351480003 : "DisneyPlus",  -1001313593468: "Nord VPN"}
 paused = False
 
-multiChannelId = {-1001177011841: "Antivirus"}
+multiChannelId = {-1001177011841 : "Antivirus"}
 multiName = {"Antivirus" : ["mc", "avast", "bd"]}
 multiImg = {"mc" : "https://i.imgur.com/UnUErxw.jpg", "avast" : "https://i.imgur.com/fQi4wJe.jpg", "bd" : "https://i.imgur.com/DRUnSIc.jpg"}
 multiFullName: {"mc" : "McAfee", "avast": "Avast", "bd": "Bit Defender"}
@@ -41,7 +41,8 @@ async def my_event_handler(event):
         elif event.gif or event.poll or event.media:
             return
         else:
-            try:
+            # try:
+            if True:
                 if event.chat_id in img.keys():
                     if event.chat_id in name.keys() and ("http://" in event.text.lower() or "https://" in event.text.lower()):
                         msg = f'''**__🔰{name[event.chat_id]}[Valid Hits]🔰
@@ -94,8 +95,8 @@ ENJOY ❤️👍
                     link_preview = False
                 )
                 await event.delete()
-            except:
-                pass
+            # except Exception as e:
+            #     print(e)
             await borg.forward_messages(event.chat_id, msg_id, channel_id)
 
 
