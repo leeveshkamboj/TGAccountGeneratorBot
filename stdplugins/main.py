@@ -12,7 +12,7 @@ msg_id = os.environ.get("MSG_ID", None)
 if msg_id:
     msg_id = int(msg_id)
 
-sticker_delete = bool(os.environ.get("STICKER_DELETE", False))
+sticker_delete = os.environ.get("STICKER_DELETE", False)
 if sticker_delete:
     print("A")
     if "true" in sticker_delete.lower():
