@@ -77,7 +77,7 @@ async def my_event_handler(event):
                 image = img[event.chat_id]
             elif event.chat_id in multiChannelId.keys():
                 for name in multiName[multiChannelId[event.chat_id]]:
-                    if name in event.text.lower() and "|" in event.text and len(event.text.strip()) - 1 > event.text.index("|"):
+                    if name in event.text.lower() and "|" in event.text:
                         image = multiImg[name]
                         msg = generateMsg(multiFullName[name], event.text[event.text.index("|") + 1 :].strip())
                         break
