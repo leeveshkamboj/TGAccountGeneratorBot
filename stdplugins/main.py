@@ -7,14 +7,41 @@ channel_id = -1001481026778
 msg_id = 211
 sticker_delete = False
 footer = "\n\n**__➖🔰@PandaZnetwork🔰➖__**"
-img = {-1001481026778 : "https://i.imgur.com/fQi4wJe.jpg", -1001481899343 : "https://i.imgur.com/DRUnSIc.jpg", -1001122798596 : "https://i.imgur.com/mGgAIbl.jpg", -1001251394025 : "https://i.imgur.com/NG6M6Eh.jpg", -1001351480003 : "https://i.imgur.com/rhXRIKw.jpg", -1001313593468 : "https://i.imgur.com/tL2awKR.jpg"}
-name = {-1001481026778 : "Express VPN", -1001481899343 : "Windscribe", -1001122798596 : "IP Vanish", -1001251394025 : "Hulu", -1001351480003 : "DisneyPlus",  -1001313593468: "Nord VPN"}
+
+name = {
+  -1001481026778: "Express VPN",
+  -1001481899343: "Windscribe",
+  -1001122798596: "IP Vanish",
+  -1001251394025: "Hulu",
+  -1001351480003: "DisneyPlus",
+  -1001313593468: "Nord VPN"
+}
+
+img = {
+  -1001481026778: "https://i.imgur.com/fQi4wJe.jpg",
+  -1001481899343: "https://i.imgur.com/DRUnSIc.jpg",
+  -1001122798596: "https://i.imgur.com/mGgAIbl.jpg",
+  -1001251394025: "https://i.imgur.com/NG6M6Eh.jpg",
+  -1001351480003: "https://i.imgur.com/rhXRIKw.jpg",
+  -1001313593468: "https://i.imgur.com/tL2awKR.jpg"
+}
+
 paused = False
 
 multiChannelId = {-1001177011841 : "Antivirus"}
-multiName = {"Antivirus" : ["mc", "avast", "bd"]}
-multiImg = {"mc" : "https://i.imgur.com/EhwhNyI.jpg", "avast" : "https://i.imgur.com/5S4zREv.jpg", "bd" : "https://i.imgur.com/iBlJ3lf.jpg"}
-multiFullName = {"mc" : "McAfee", "avast": "Avast", "bd": "Bit Defender"}
+
+multiName = {
+    "Antivirus": {
+      "mc": "https://i.imgur.com/EhwhNyI.jpg",
+      "avast": "https://i.imgur.com/5S4zREv.jpg",
+      "bd": "https://i.imgur.com/iBlJ3lf.jpg"
+    }
+
+multiFullName = {
+  "mc": "McAfee",
+  "avast": "Avast",
+  "bd": "Bit Defender"
+}
 
 
 def generateMsg(name, content):
@@ -69,9 +96,9 @@ async def my_event_handler(event):
                 msg = generateMsg(name[event.chat_id], event.text)
                 image = img[event.chat_id]
             elif event.chat_id in multiChannelId.keys():
-                for name in multiName[multiChannelId[event.chat_id]]:
+                for name in multiName[multiChannelId[event.chat_id]].keys():
                     if name in event.text.lower() and "|" in event.text:
-                        image = multiImg[name]
+                        image = multiName[multiChannelId[event.chat_id]][name]
                         msg = generateMsg(multiFullName[name], event.text[event.text.index("|") + 1 :].strip())
                         break
                 else:
