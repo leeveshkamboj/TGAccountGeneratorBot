@@ -20,32 +20,30 @@ multiFullName = {"mc" : "McAfee", "avast": "Avast", "bd": "Bit Defender"}
 @borg.on(events.NewMessage)
 async def my_event_handler(event):                     
     global channel_id, msg_id, sticker_delete, footer, img, paused, name, multiChannelId, multiName, multiImg, multiFullName
-    if channel_id and msg_id:
-        if event.text == "/stop":
-            paused = True
-            await event.edit("Bot Stopped.")
-            time.sleep(3)
+    if event.text == "/stop":
+        paused = True
+        await event.edit("Bot Stopped.")
+        time.sleep(3)
+        await event.delete()
+        return
+    if event.text == "/start":
+        paused = False
+        await event.edit("Bot Started.")
+        time.sleep(3)
+        await event.delete()
+        return
+    if paused:
+        return
+    if event.sticker:
+        if sticker_delete:
             await event.delete()
-            return
-        if event.text == "/start":
-            paused = False
-            await event.edit("Bot Started.")
-            time.sleep(3)
-            await event.delete()
-            return
-        if paused:
-            return
-        if event.sticker:
-            if sticker_delete:
-                await event.delete()
-        elif event.gif or event.poll or event.media:
-            return
-        else:
-            # try:
-            if True:
-                if event.chat_id in img.keys():
-                    if event.chat_id in name.keys() and ("http://" in event.text.lower() or "https://" in event.text.lower()):
-                        msg = f'''**__🔰{name[event.chat_id]}[Valid Hits]🔰
+    elif event.gif or event.poll or event.media:
+        return
+    else:
+        try:
+            if event.chat_id in img.keys():
+                if event.chat_id in name.keys() and ("http://" in event.text.lower() or "https://" in event.text.lower()):
+                    msg = f'''**__🔰{name[event.chat_id]}[Valid Hits]🔰
 
 🌀 All accounts are working and fresh. We will never give Not working Accounts
 
@@ -59,22 +57,22 @@ async def my_event_handler(event):
 ENJOY ❤️👍
 
 ➖🔰@PandaZnetwork🔰➖__**'''
-                    else:
-                        msg = f"**__🔰{name[event.chat_id]}🔰__**\n\n" + event.text + footer
-                    image = img[event.chat_id]
-                elif event.chat_id in multiChannelId.keys():
-                    for name in multiName[multiChannelId[event.chat_id]]:
-                        if name in event.text.lower() and "|" in event.text and len(event.text.strip()) - 1 > event.text.index("|"):
-                            image = multiImg[name]
-                            if "http://" in event.text.lower() or "https://" in event.text.lower():
-                                msg = f'''**__🔰{multiFullName[name]}🔰
+                else:
+                    msg = f"**__🔰{name[event.chat_id]}🔰__**\n\n" + event.text + footer
+                image = img[event.chat_id]
+            elif event.chat_id in multiChannelId.keys():
+                for name in multiName[multiChannelId[event.chat_id]]:
+                    if name in event.text.lower() and "|" in event.text and len(event.text.strip()) - 1 > event.text.index("|"):
+                        image = multiImg[name]
+                        if "http://" in event.text.lower() or "https://" in event.text.lower():
+                            msg = f'''**__🔰{multiFullName[name]}🔰
 
 🌀 All accounts are working and fresh. We will never give Not working Accounts
 
 ✅ If these accounts have guard then sorry we can't help. 
 
 🔺 How to Open Links
-    Link:- https://youtu.be/XkMSDlGEKqQ
+Link:- https://youtu.be/XkMSDlGEKqQ
 ==========================
 ⭕️ Link to Accounts :
 🔥 {event.text[event.text.index("|") + 1 :].strip()}
@@ -84,24 +82,26 @@ ENJOY ❤️👍
 ENJOY ❤️👍
 
 ➖🔰@PandaZnetwork🔰➖__**'''
-                            else:
-                                msg = f"**__🔰{multiFullName[name]}🔰__**\n\n" + event.text[event.text.index("|") + 1 :].strip() + footer
-                            break
-                    else:
-                        await borg.edit_message(event.chat_id, event.message.id, event.text + footer, link_preview = False)
-                        await borg.forward_messages(event.chat_id, msg_id, channel_id)
-                        return
+                        else:
+                            msg = f"**__🔰{multiFullName[name]}🔰__**\n\n" + event.text[event.text.index("|") + 1 :].strip() + footer
+                        break
                 else:
+                    await borg.edit_message(event.chat_id, event.message.id, event.text + footer, link_preview = False)
+                    if channel_id and msg_id:
+                        await borg.forward_messages(event.chat_id, msg_id, channel_id)
                     return
-                await event.client.send_message(
-                    event.chat_id,
-                    msg,
-                    file = image,
-                    link_preview = False
-                )
-                await event.delete()
-            # except Exception as e:
-            #     print(e)
+            else:
+                return
+            await event.client.send_message(
+                event.chat_id,
+                msg,
+                file = image,
+                link_preview = False
+            )
+            await event.delete()
+        except Exception as err:
+            print(f"Error - {err}"")
+        if channel_id and msg_id:
             await borg.forward_messages(event.chat_id, msg_id, channel_id)
 
 
