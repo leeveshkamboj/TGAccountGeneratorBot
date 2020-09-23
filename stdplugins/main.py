@@ -62,7 +62,7 @@ async def my_event_handler(event):
     if event.sticker:
         if sticker_delete:
             await event.delete()
-    elif (event.gif or event.poll or event.media) and not previous_message.web_preview:
+    elif (event.gif or event.poll or event.media) and not event.web_preview:
         try:
             await borg.edit_message(event.chat_id, event.message.id, event.text + footer, link_preview = False)
         except:
