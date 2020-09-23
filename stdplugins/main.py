@@ -63,10 +63,8 @@ ENJOY ❤️👍
                         msg = f"**__🔰{name[event.chat_id]}🔰__**\n\n" + event.text + footer
                     image = img[event.chat_id]
                 elif event.chat_id in multiChannelId.keys():
-                    print("a")
                     for name in multiName[multiChannelId[event.chat_id]]:
-                        print("b", name)
-                        if name in event.text.lower():
+                        if name in event.text.lower() and "|" in event.text and len(event.text.strip()) - 1 > event.text.index("|"):
                             image = multiImg[name]
                             if "http://" in event.text.lower() or "https://" in event.text.lower():
                                 msg = f'''**__🔰{multiFullName[name]}🔰
