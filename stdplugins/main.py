@@ -63,7 +63,9 @@ ENJOY ❤️👍
                         msg = f"**__🔰{name[event.chat_id]}🔰__**\n\n" + event.text + footer
                     image = img[event.chat_id]
                 elif event.chat_id in multiChannelId.keys():
+                    print("a")
                     for name in multiName[multiChannelId[event.chat_id]]:
+                        print("b", name)
                         if name in event.text:
                             image = multiImg[name]
                             if "|" in event.text:
@@ -86,8 +88,7 @@ ENJOY ❤️👍
 ➖🔰@PandaZnetwork🔰➖__**'''
                             else:
                                 msg = f"**__🔰{multiFullName[name]}🔰__**\n\n" + event.text + footer
-                        else:
-                            return
+                            break
                 await event.client.send_message(
                     event.chat_id,
                     msg,
