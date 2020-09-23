@@ -19,7 +19,7 @@ multiFullName: {"mc" : "McAfee", "avast": "Avast", "bd": "Bit Defender"}
 
 @borg.on(events.NewMessage)
 async def my_event_handler(event):                     
-    global channel_id, msg_id, sticker_delete, footer, img, paused
+    global channel_id, msg_id, sticker_delete, footer, img, paused, name, multiChannelId, multiName, multiImg, multiFullName
     if channel_id is not None and msg_id is not None and event.chat_id in img.keys():
         if event.text == "/stop":
             paused = True
