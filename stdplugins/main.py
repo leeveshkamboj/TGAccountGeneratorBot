@@ -14,7 +14,10 @@ if msg_id:
 
 sticker_delete = os.environ.get("STICKER_DELETE", False)
 if sticker_delete:
-    sticker_delete = bool(sticker_delete)
+    if "true" in sticker_delete:
+        sticker_delete = True
+    else:
+        False
 
 footer = os.environ.get("FOOTER", "")
 if footer:
@@ -38,8 +41,6 @@ img = {
   -1001313593468: "https://i.imgur.com/tL2awKR.jpg"
 }
 
-paused = False
-
 multiChannelId = {-1001177011841 : "Antivirus"}
 
 multiName = {
@@ -55,6 +56,10 @@ multiFullName = {
   "avast": "Avast",
   "bd": "Bit Defender"
 }
+
+paused = False
+
+
 
 
 def generateMsg(name, content):
