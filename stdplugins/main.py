@@ -103,7 +103,7 @@ ENJOY ❤️👍
             )
             await event.delete()
         except Exception as err:
-            print(f"Error - {err}"")
+            print(f"Error - {err}")
         if channel_id and msg_id:
             await borg.forward_messages(event.chat_id, msg_id, channel_id)
 
