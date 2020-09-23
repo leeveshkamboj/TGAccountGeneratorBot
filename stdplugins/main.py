@@ -14,13 +14,11 @@ if msg_id:
 
 sticker_delete = os.environ.get("STICKER_DELETE", False)
 if sticker_delete:
-    print("A")
     if "true" in sticker_delete.lower():
-        print("b")
         sticker_delete = True
     else:
         sticker_delete = False
-        print("c")
+      
 footer = os.environ.get("FOOTER", "")
 if footer:
     footer = "\n\n" + footer
@@ -46,17 +44,17 @@ img = {
 multiChannelId = {-1001177011841 : "Antivirus"}
 
 multiName = {
-    "Antivirus": {
-      "mc": "https://i.imgur.com/EhwhNyI.jpg",
-      "avast": "https://i.imgur.com/5S4zREv.jpg",
-      "bd": "https://i.imgur.com/iBlJ3lf.jpg"
+    "Antivirus" : {
+      "mc" : "https://i.imgur.com/EhwhNyI.jpg",
+      "avast" : "https://i.imgur.com/5S4zREv.jpg",
+      "bd" : "https://i.imgur.com/iBlJ3lf.jpg"
     }
 }
 
 multiFullName = {
-  "mc": "McAfee",
-  "avast": "Avast",
-  "bd": "Bit Defender"
+  "mc" : "McAfee",
+  "avast" : "Avast",
+  "bd" : "Bit Defender"
 }
 
 paused = False
