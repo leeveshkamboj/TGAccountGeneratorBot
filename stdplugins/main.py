@@ -96,7 +96,7 @@ async def my_event_handler(event):
         time.sleep(3)
         await event.delete()
         return
-    if event.text == "/start":
+    if event.text == "/start" and event.is_channel:
         paused = False
         await event.edit("Bot Started.")
         time.sleep(3)
