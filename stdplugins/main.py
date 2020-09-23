@@ -90,9 +90,10 @@ ENJOY ❤️👍
                                 msg = f"**__🔰{multiFullName[name]}🔰__**\n\n" + event.text[event.text.index("|") + 1 :].strip() + footer
                             break
                     else:
+                        await borg.edit_message(event.chat_id, event.message.id, event.text + footer, link_preview = False)
+                        await borg.forward_messages(event.chat_id, msg_id, channel_id)
                         return
                 else:
-                    print(event.chat_id)
                     return
                 await event.client.send_message(
                     event.chat_id,
