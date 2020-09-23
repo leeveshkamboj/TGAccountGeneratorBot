@@ -63,16 +63,16 @@ async def my_event_handler(event):
         if sticker_delete:
             await event.delete()
         return
-    print(event.web_preview)
-    if not event.web_preview and (event.gif or event.poll or event.media):
-        print("here")
-        try:
-            await borg.edit_message(event.chat_id, event.message.id, event.text + footer, link_preview = False)
-        except:
-            pass
-        if channel_id and msg_id:
-            await borg.forward_messages(event.chat_id, msg_id, channel_id)
-        return
+    # print(event.web_preview)
+    # if not event.web_preview and (event.gif or event.poll or event.media):
+    #     print("here")
+    #     try:
+    #         await borg.edit_message(event.chat_id, event.message.id, event.text + footer, link_preview = False)
+    #     except:
+    #         pass
+    #     if channel_id and msg_id:
+    #         await borg.forward_messages(event.chat_id, msg_id, channel_id)
+    #     return
     else:
         try:
             if event.chat_id in img.keys():
