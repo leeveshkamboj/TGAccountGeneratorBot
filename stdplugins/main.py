@@ -48,6 +48,9 @@ async def my_event_handler(event):
 🌀 All accounts are working and fresh. We will never give Not working Accounts
 
 ✅ If these accounts have guard then sorry we can't help. 
+
+🔺 How to Open Links
+Link:- https://youtu.be/XkMSDlGEKqQ
 ==========================
 ⭕️ Link to Accounts :
 🔥 {event.text}
