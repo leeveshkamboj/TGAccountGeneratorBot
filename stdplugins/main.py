@@ -14,7 +14,7 @@ paused = False
 multiChannelId = {-1001177011841 : "Antivirus"}
 multiName = {"Antivirus" : ["mc", "avast", "bd"]}
 multiImg = {"mc" : "https://i.imgur.com/UnUErxw.jpg", "avast" : "https://i.imgur.com/fQi4wJe.jpg", "bd" : "https://i.imgur.com/DRUnSIc.jpg"}
-multiFullName: {"mc" : "McAfee", "avast": "Avast", "bd": "Bit Defender"}
+multiFullName = {"mc" : "McAfee", "avast": "Avast", "bd": "Bit Defender"}
 
 
 @borg.on(events.NewMessage)
@@ -66,10 +66,9 @@ ENJOY ❤️👍
                     print("a")
                     for name in multiName[multiChannelId[event.chat_id]]:
                         print("b", name)
-                        if name in event.text:
+                        if name in event.text.lower():
                             image = multiImg[name]
-                            global multiFullName
-                            if "|" in event.text:
+                            if "http://" in event.text.lower() or "https://" in event.text.lower():
                                 msg = f'''**__🔰{multiFullName[name]}🔰
 
 🌀 All accounts are working and fresh. We will never give Not working Accounts
@@ -88,7 +87,7 @@ ENJOY ❤️👍
 
 ➖🔰@PandaZnetwork🔰➖__**'''
                             else:
-                                msg = f"**__🔰{multiFullName[name]}🔰__**\n\n" + event.text + footer
+                                msg = f"**__🔰{multiFullName[name]}🔰__**\n\n" + event.text[event.text.index("|") + 1 :].strip() + footer
                             break
                     else:
                         return
