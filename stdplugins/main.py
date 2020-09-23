@@ -13,7 +13,7 @@ paused = False
 
 multiChannelId = {-1001177011841 : "Antivirus"}
 multiName = {"Antivirus" : ["mc", "avast", "bd"]}
-multiImg = {"mc" : "https://i.imgur.com/UnUErxw.jpg", "avast" : "https://i.imgur.com/fQi4wJe.jpg", "bd" : "https://i.imgur.com/DRUnSIc.jpg"}
+multiImg = {"mc" : "https://i.imgur.com/EhwhNyI.jpg", "avast" : "https://i.imgur.com/5S4zREv.jpg", "bd" : "https://i.imgur.com/iBlJ3lf.jpg"}
 multiFullName = {"mc" : "McAfee", "avast": "Avast", "bd": "Bit Defender"}
 
 
