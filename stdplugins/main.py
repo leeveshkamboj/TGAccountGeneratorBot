@@ -74,8 +74,8 @@ async def my_event_handler(event):
     #         await borg.forward_messages(event.chat_id, msg_id, channel_id)
     #     return
     else:
-        # try:
-        if True:
+        try:
+        # if True:
             if event.chat_id in img.keys():
                 msg = generateMsg(name[event.chat_id], event.text)
                 image = img[event.chat_id]
@@ -99,8 +99,8 @@ async def my_event_handler(event):
                 link_preview = False
             )
             await event.delete()
-        # except Exception as err:
-        #     print(f"Error - {err}")
+        except Exception as err:
+            print(f"Error - {err}")
         if channel_id and msg_id:
             await borg.forward_messages(event.chat_id, msg_id, channel_id)
 
