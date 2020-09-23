@@ -3,10 +3,19 @@ from uniborg.util import admin_cmd
 import time
 
 
-channel_id = -1001481026778
-msg_id = 211
-sticker_delete = False
-footer = "\n\n**__➖🔰@PandaZnetwork🔰➖__**"
+channel_id = os.environ.get("CHANNEL_ID", None)
+if channel_id:
+    channel_id = int(channel_id)
+
+msg_id = os.environ.get("MSG_ID", None)
+if msg_id:
+    msg_id = int(msg_id)
+
+sticker_delete = os.environ.get("STICKER_DELETE", False)
+if sticker_delete:
+    sticker_delete = bool(sticker_delete)
+
+footer = os.environ.get("FOOTER", "")
 
 name = {
   -1001481026778: "Express VPN",
