@@ -6,15 +6,13 @@ import logging
 
 from uniborg import Uniborg
 import api_key
+import os
 
 logging.basicConfig(level=logging.INFO)
 
-borg = Uniborg(
-        "stdborg",
-        plugin_path="stdplugins",
-        connection_retries=None,
-        api_id=api_key.id,
-        api_hash=api_key.hash
-)
-
-borg.run_until_disconnected()
+TOKEN = os.environ.get("TOKEN", None)
+if TOKEN:
+    borg = Uniborg('bot', bot_token=TOKEN, plugin_path="stdplugins")
+    borg.run_until_disconnected()
+else:
+    print("Enter Token in config.")
