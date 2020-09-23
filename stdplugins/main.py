@@ -68,6 +68,7 @@ ENJOY ❤️👍
                         print("b", name)
                         if name in event.text:
                             image = multiImg[name]
+                            global multiFullName
                             if "|" in event.text:
                                 msg = f'''**__🔰{multiFullName[name]}🔰
 
