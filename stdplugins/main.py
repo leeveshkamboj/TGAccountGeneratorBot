@@ -17,6 +17,31 @@ multiImg = {"mc" : "https://i.imgur.com/EhwhNyI.jpg", "avast" : "https://i.imgur
 multiFullName = {"mc" : "McAfee", "avast": "Avast", "bd": "Bit Defender"}
 
 
+def generateMsg(name, content):
+    if "http://" in content.lower() or "https://" in content.lower():
+        return f'''**__🔰{name}[Valid Hits]🔰
+
+🌀 All accounts are working and fresh. We will never give Not working Accounts
+
+✅ If these accounts have guard then sorry we can't help. 
+
+🔺 How to Open Links
+Link:- https://youtu.be/XkMSDlGEKqQ
+==========================
+⭕️ Link to Accounts :
+🔥 {content}
+==========================
+❌ Don't change the password else account will stop soon
+➖➖➖➖➖➖➖➖➖➖➖➖
+ENJOY ❤️👍
+
+➖🔰@PandaZnetwork🔰➖__**'''
+    else:
+        return f"**__🔰{name}🔰__**\n\n" + content + footer
+
+
+
+
 @borg.on(events.NewMessage)
 async def my_event_handler(event):                     
     global channel_id, msg_id, sticker_delete, footer, img, paused, name, multiChannelId, multiName, multiImg, multiFullName
@@ -37,56 +62,24 @@ async def my_event_handler(event):
     if event.sticker:
         if sticker_delete:
             await event.delete()
-    elif event.gif or event.poll or event.media:
+    elif (event.gif or event.poll or event.media) and not previous_message.web_preview:
+        try:
+            await borg.edit_message(event.chat_id, event.message.id, event.text + footer, link_preview = False)
+        except:
+            pass
+        if channel_id and msg_id:
+            await borg.forward_messages(event.chat_id, msg_id, channel_id)
         return
     else:
         try:
             if event.chat_id in img.keys():
-                if event.chat_id in name.keys() and ("http://" in event.text.lower() or "https://" in event.text.lower()):
-                    msg = f'''**__🔰{name[event.chat_id]}[Valid Hits]🔰
-
-🌀 All accounts are working and fresh. We will never give Not working Accounts
-
-✅ If these accounts have guard then sorry we can't help. 
-
-🔺 How to Open Links
-Link:- https://youtu.be/XkMSDlGEKqQ
-==========================
-⭕️ Link to Accounts :
-🔥 {event.text}
-==========================
-❌ Don't change the password else account will stop soon
-➖➖➖➖➖➖➖➖➖➖➖➖
-ENJOY ❤️👍
-
-➖🔰@PandaZnetwork🔰➖__**'''
-                else:
-                    msg = f"**__🔰{name[event.chat_id]}🔰__**\n\n" + event.text + footer
+                msg = generateMsg(name[event.chat_id], event.text)
                 image = img[event.chat_id]
             elif event.chat_id in multiChannelId.keys():
                 for name in multiName[multiChannelId[event.chat_id]]:
                     if name in event.text.lower() and "|" in event.text and len(event.text.strip()) - 1 > event.text.index("|"):
                         image = multiImg[name]
-                        if "http://" in event.text.lower() or "https://" in event.text.lower():
-                            msg = f'''**__🔰{multiFullName[name]}🔰
-
-🌀 All accounts are working and fresh. We will never give Not working Accounts
-
-✅ If these accounts have guard then sorry we can't help. 
-
-🔺 How to Open Links
-Link:- https://youtu.be/XkMSDlGEKqQ
-==========================
-⭕️ Link to Accounts :
-🔥 {event.text[event.text.index("|") + 1 :].strip()}
-==========================
-❌ Don't change the password else account will stop soon
-➖➖➖➖➖➖➖➖➖➖➖➖
-ENJOY ❤️👍
-
-➖🔰@PandaZnetwork🔰➖__**'''
-                        else:
-                            msg = f"**__🔰{multiFullName[name]}🔰__**\n\n" + event.text[event.text.index("|") + 1 :].strip() + footer
+                        msg = generateMsg(multiFullName[name], event.text[event.text.index("|") + 1 :].strip())
                         break
                 else:
                     await borg.edit_message(event.chat_id, event.message.id, event.text + footer, link_preview = False)
