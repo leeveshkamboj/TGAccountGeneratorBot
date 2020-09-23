@@ -23,24 +23,6 @@ footer = os.environ.get("FOOTER", "")
 if footer:
     footer = "\n\n" + footer
 
-name = {
-  -1001481026778: "Express VPN",
-  -1001481899343: "Windscribe",
-  -1001122798596: "IP Vanish",
-  -1001251394025: "Hulu",
-  -1001351480003: "DisneyPlus",
-  -1001313593468: "Nord VPN"
-}
-
-img = {
-  -1001481026778: "https://i.imgur.com/fQi4wJe.jpg",
-  -1001481899343: "https://i.imgur.com/DRUnSIc.jpg",
-  -1001122798596: "https://i.imgur.com/mGgAIbl.jpg",
-  -1001251394025: "https://i.imgur.com/NG6M6Eh.jpg",
-  -1001351480003: "https://i.imgur.com/rhXRIKw.jpg",
-  -1001313593468: "https://i.imgur.com/tL2awKR.jpg"
-}
-
 multiChannelId = {-1001177011841 : "Antivirus"}
 
 multiName = {
@@ -111,6 +93,25 @@ async def my_event_handler(event):
     else:
         try:
             if event.chat_id in img.keys():
+                
+                name = {
+                  -1001481026778: "Express VPN",
+                  -1001481899343: "Windscribe",
+                  -1001122798596: "IP Vanish",
+                  -1001251394025: "Hulu",
+                  -1001351480003: "DisneyPlus",
+                  -1001313593468: "Nord VPN"
+                }
+
+                img = {
+                  -1001481026778: "https://i.imgur.com/fQi4wJe.jpg",
+                  -1001481899343: "https://i.imgur.com/DRUnSIc.jpg",
+                  -1001122798596: "https://i.imgur.com/mGgAIbl.jpg",
+                  -1001251394025: "https://i.imgur.com/NG6M6Eh.jpg",
+                  -1001351480003: "https://i.imgur.com/rhXRIKw.jpg",
+                  -1001313593468: "https://i.imgur.com/tL2awKR.jpg"
+                }
+
                 msg = generateMsg(name[event.chat_id], event.text)
                 image = img[event.chat_id]
             elif event.chat_id in multiChannelId.keys():
