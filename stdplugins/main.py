@@ -1,6 +1,7 @@
 ﻿from telethon import events, Button
 from uniborg.util import admin_cmd
 import time
+import os
 
 
 channel_id = os.environ.get("CHANNEL_ID", None)
