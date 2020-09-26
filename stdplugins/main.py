@@ -71,7 +71,8 @@ name = {
     -1001122798596: "IP Vanish",
     -1001251394025: "Hulu",
     -1001351480003: "DisneyPlus",
-    -1001313593468: "Nord VPN"
+    -1001313593468: "Nord VPN",
+     : "Crunchyroll"
 }
 
 img = {
@@ -80,7 +81,8 @@ img = {
     -1001122798596: "https://i.imgur.com/mGgAIbl.jpg",
     -1001251394025: "https://i.imgur.com/NG6M6Eh.jpg",
     -1001351480003: "https://i.imgur.com/rhXRIKw.jpg",
-    -1001313593468: "https://i.imgur.com/tL2awKR.jpg"
+    -1001313593468: "https://i.imgur.com/tL2awKR.jpg",
+     : "https://i.imgur.com/Jxuet4U.jpg"
 }
 
 
@@ -116,8 +118,10 @@ async def my_event_handler(event):
                   -1001122798596: "IP Vanish",
                   -1001251394025: "Hulu",
                   -1001351480003: "DisneyPlus",
-                  -1001313593468: "Nord VPN"
-                }
+                  -1001313593468: "Nord VPN",
+                  }
+##                   : "Crunchyroll"
+##                }
 
                 img = {
                   -1001481026778: "https://i.imgur.com/fQi4wJe.jpg",
@@ -125,8 +129,10 @@ async def my_event_handler(event):
                   -1001122798596: "https://i.imgur.com/mGgAIbl.jpg",
                   -1001251394025: "https://i.imgur.com/NG6M6Eh.jpg",
                   -1001351480003: "https://i.imgur.com/rhXRIKw.jpg",
-                  -1001313593468: "https://i.imgur.com/tL2awKR.jpg"
-                }
+                  -1001313593468: "https://i.imgur.com/tL2awKR.jpg",
+                  }
+##                   : "https://i.imgur.com/Jxuet4U.jpg"
+##                }
 
                 msg = generateMsg(name[event.chat_id], event.text)
                 image = img[event.chat_id]
@@ -137,7 +143,20 @@ async def my_event_handler(event):
                         msg = generateMsg(multiFullName[name], event.text[event.text.index("|") + 1 :].strip())
                         break
                 else:
-                    await borg.edit_message(event.chat_id, event.message.id, event.text + footer, link_preview = False)
+                    if not event.fwd_from:
+                        try:
+                            await borg.edit_message(event.chat_id, event.message.id, event.text + footer, link_preview = False)
+                        except Exception as err:
+                            print(f"Error - {err}")
+                    if channel_id and msg_id:
+                        await borg.forward_messages(event.chat_id, msg_id, channel_id)
+                    return
+            elif event.chat_id == channel_id:
+                if not event.fwd_from:
+                    try:
+                        await borg.edit_message(event.chat_id, event.message.id, event.text + footer, link_preview = False)
+                    except Exception as err:
+                        print(f"Error - {err}")
                     if channel_id and msg_id:
                         await borg.forward_messages(event.chat_id, msg_id, channel_id)
                     return
