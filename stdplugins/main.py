@@ -111,7 +111,6 @@ async def my_event_handler(event):
     else:
         try:
             if event.chat_id in img.keys():
-                print(event.chat_id)
                 name = {
                   -1001481026778: "Express VPN",
                   -1001481899343: "Windscribe",
@@ -131,7 +130,6 @@ async def my_event_handler(event):
                   -1001313593468: "https://i.imgur.com/tL2awKR.jpg",
                   -1001216655686: "https://i.imgur.com/Jxuet4U.jpg"
                 }
-                print(msg, image)
                 msg = generateMsg(name[event.chat_id], event.text)
                 image = img[event.chat_id]
             elif event.chat_id in multiChannelId.keys():
