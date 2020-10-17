@@ -20,12 +20,12 @@ async def my_event_handler(event):
         else:
             text = ''
             for a in out[1:]:
-                text += out[1].lstrip() + " "
-            with io.BytesIO(str.encode(text)) as out_file:
-                out_file.name = filename
-                await borg.send_file(
-                    event.chat_id,
-                    out_file,
-                    force_document=True,
-                    allow_cache=False,
-                )
+                text += a + "|"
+        with io.BytesIO(str.encode(text)) as out_file:
+            out_file.name = filename
+            await borg.send_file(
+                event.chat_id,
+                out_file,
+                force_document=True,
+                allow_cache=False,
+            )
