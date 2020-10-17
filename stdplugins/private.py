@@ -1,4 +1,6 @@
 from telethon import events
+import io
+
 
 @borg.on(events.NewMessage)
 async def my_event_handler(event):
@@ -10,11 +12,20 @@ async def my_event_handler(event):
             await event.reply('yo')
             return
         out = event.raw_text.split("|")
-        with io.BytesIO(str.encode(out[1].lstrip())) as out_file:
-            out_file.name = out[0].rstrip() + ".txt"
-            await borg.send_file(
-                event.chat_id,
-                out_file,
-                force_document=True,
-                allow_cache=False,
-            )
+        filename = out[0].rstrip() + ".txt"
+        
+        if len(out) < 2:
+            filename = "unnamed.txt"
+            text = event.raw_text
+        else:
+            text = ''
+            for a in out[1:]:
+                text += out[1].lstrip() + " "
+            with io.BytesIO(str.encode(text)) as out_file:
+                out_file.name = filename
+                await borg.send_file(
+                    event.chat_id,
+                    out_file,
+                    force_document=True,
+                    allow_cache=False,
+                )
