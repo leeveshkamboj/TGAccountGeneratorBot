@@ -72,7 +72,8 @@ name = {
     -1001251394025: "Hulu",
     -1001351480003: "DisneyPlus",
     -1001313593468: "Nord VPN",
-    -1001216655686: "Crunchyroll"
+    -1001216655686: "Crunchyroll",
+    -1001177942583: "HMA VPN"
 }
 
 img = {
@@ -82,7 +83,8 @@ img = {
     -1001251394025: "https://i.imgur.com/NG6M6Eh.jpg",
     -1001351480003: "https://i.imgur.com/rhXRIKw.jpg",
     -1001313593468: "https://i.imgur.com/tL2awKR.jpg",
-    -1001216655686: "https://i.imgur.com/Jxuet4U.jpg"
+    -1001216655686: "https://i.imgur.com/Jxuet4U.jpg",
+    -1001177942583: "https://i.imgur.com/151wsmZ.jpg"
 }
 
 
@@ -118,7 +120,8 @@ async def my_event_handler(event):
                   -1001251394025: "Hulu",
                   -1001351480003: "DisneyPlus",
                   -1001313593468: "Nord VPN",
-                  -1001216655686: "Crunchyroll"
+                  -1001216655686: "Crunchyroll",
+                  -1001177942583: "HMA VPN"
                 }
 
                 img = {
@@ -128,7 +131,8 @@ async def my_event_handler(event):
                   -1001251394025: "https://i.imgur.com/NG6M6Eh.jpg",
                   -1001351480003: "https://i.imgur.com/rhXRIKw.jpg",
                   -1001313593468: "https://i.imgur.com/tL2awKR.jpg",
-                  -1001216655686: "https://i.imgur.com/Jxuet4U.jpg"
+                  -1001216655686: "https://i.imgur.com/Jxuet4U.jpg",
+                  -1001177942583: "https://i.imgur.com/151wsmZ.jpg"                  
                 }
                 msg = generateMsg(name[event.chat_id], event.text)
                 image = img[event.chat_id]
