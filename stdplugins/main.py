@@ -162,7 +162,7 @@ async def my_event_handler(event):
             elif event.chat_id == channel_id:
                 if not event.fwd_from:
                     try:
-                        await borg.edit_message(event.chat_id, event.message.id, "**" + event.text + mainFooter + "**", link_preview = False)
+                        await borg.edit_message(event.chat_id, event.message.id, event.text + footer, link_preview = False)
                     except Exception as err:
                         print(f"Error - {err}")
                     if channel_id and msg_id:
