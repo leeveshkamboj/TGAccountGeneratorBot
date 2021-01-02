@@ -180,6 +180,7 @@ async def my_event_handler(event):
         except Exception as err:
             print(f"Error - {err}")
         if channel_id and msg_id:
+            print(event.chat_id, msg_id, channel_id)
             await borg.forward_messages(event.chat_id, msg_id, channel_id)
 
 
