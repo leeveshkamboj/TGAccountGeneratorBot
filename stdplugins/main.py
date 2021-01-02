@@ -115,6 +115,9 @@ async def my_event_handler(event):
     if event.chat_id == -1001480955429:
         await borg.edit_message(event.chat_id, event.message.id, "**" + event.text + "\n\nTaking Request On @DarkFoxMods_bot\n\n📝 | Note: If any mod is not working,\n📝 | just msg us on @darkfoxmods_bot\n📝 | with screenshot as proof\n▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬\n➙| @darkfoxmods Channel\n➙| @darkfoxmods_bot Request Here**", link_preview = False)
         await borg.forward_messages(-1001480955429, 11, -1001480955429)
+    elif event.chat_id == -1001404860563:
+        await borg.edit_message(event.chat_id, event.message.id, "**" + event.text + mainFooter + "**", link_preview = False)
+        await borg.forward_messages(-1001404860563, 6936, -1001404860563)
     else:
         try:
             if event.chat_id in img.keys():
