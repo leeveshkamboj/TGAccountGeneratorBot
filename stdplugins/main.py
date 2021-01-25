@@ -48,23 +48,19 @@ paused = False
 
 def generateMsg(name, content):
     if "http://" in content.lower() or "https://" in content.lower():
-        return f'''**__🔰{name}[Valid Hits]🔰
-
-🌀 All accounts are working and fresh. We will never give Not working Accounts
-
-✅ If these accounts have guard then sorry we can't help. 
-
+        return f'''🔰 {name} Accounts 🔰
+➖➖➖➖➖➖➖➖➖➖➖➖➖
+Link : {content}
+➖➖➖➖➖➖➖➖➖➖➖➖➖
+❌ Don't change the password else account will stop working soon
+➖➖➖➖➖➖➖➖➖➖➖➖➖
 🔺 How to Open Links
 Link:- https://youtu.be/XkMSDlGEKqQ
-==========================
-⭕️ Link to Accounts :
-🔥 {content}
-==========================
-❌ Don't change the password else account will stop soon
-➖➖➖➖➖➖➖➖➖➖➖➖
-ENJOY ❤️👍
-
-➖🔰@PandaZnetwork🔰➖__**'''
+➖➖➖➖➖➖➖➖➖➖➖➖➖
+📝 | Note: After Login Send Screenshot. 
+▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬
+➙| @PandaZsupport_Bot Send Screenshot 
+➙| @PandazProofs Proofs Here'''
     else:
         return f"**__🔰{name}🔰__**\n\n" + content + footer
 name = {
