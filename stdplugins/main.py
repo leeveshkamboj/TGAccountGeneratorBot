@@ -80,7 +80,7 @@ name = {
 
 img = {
     -1001481026778: "https://i.imgur.com/w3n2iY5.jpg",
-    -1001481899343: "https://i.imgur.com/DRUnSIc.jpg",
+    -1001481899343: "https://i.imgur.com/uXyEThc.jpg",
     -1001122798596: "https://i.imgur.com/mGgAIbl.jpg",
     -1001251394025: "https://i.imgur.com/NG6M6Eh.jpg",
     -1001351480003: "https://i.imgur.com/rhXRIKw.jpg",
@@ -134,7 +134,7 @@ async def my_event_handler(event):
 
                 img = {
                   -1001481026778: "https://i.imgur.com/w3n2iY5.jpg",
-                  -1001481899343: "https://i.imgur.com/DRUnSIc.jpg",
+                  -1001481899343: "https://i.imgur.com/uXyEThc.jpg",
                   -1001122798596: "https://i.imgur.com/mGgAIbl.jpg",
                   -1001251394025: "https://i.imgur.com/NG6M6Eh.jpg",
                   -1001351480003: "https://i.imgur.com/rhXRIKw.jpg",
