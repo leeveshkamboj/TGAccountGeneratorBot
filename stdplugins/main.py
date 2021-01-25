@@ -48,7 +48,7 @@ paused = False
 
 def generateMsg(name, content):
     if "http://" in content.lower() or "https://" in content.lower():
-        return f'''🔰 {name} Accounts 🔰
+        return f'''**🔰 {name} Accounts 🔰**
 ➖➖➖➖➖➖➖➖➖➖➖➖➖
 Link : {content}
 ➖➖➖➖➖➖➖➖➖➖➖➖➖
