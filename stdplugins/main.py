@@ -31,6 +31,9 @@ async def my_event_handler(event):
         if '/start' == event.raw_text.lower():
             await borg.send_message(event.chat_id, "**Hi**\nUse /gen to geneate account")
             return
+        if '/count' == event.raw_text.lower():
+            userList = get_all_users()
+            await borg.send_message(event.chat_id, f"{len(userList)} users.")
         if 'yo' == event.raw_text.lower():
             await event.reply('yo')
             return
