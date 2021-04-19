@@ -65,8 +65,10 @@ async def my_event_handler(event):
                 await borg.send_message(event.chat_id, msg)
                 return
         if '/addhit' == event.raw_text.lower()[0:7]:
-            addHit(event.raw_text.lower()[8:])
-            await borg.send_message(event.chat_id, "Hit added.")
+            hits = event.raw_text.lower()[8:].split("\n")
+            for hit in hits:
+                addHit(hit)
+            await borg.send_message(event.chat_id, f"{len(hits)} Hit(s) added.")
         if 'yo' == event.raw_text.lower():
             await event.reply('yo')
             return
