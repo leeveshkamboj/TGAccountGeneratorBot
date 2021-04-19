@@ -16,7 +16,7 @@ def genAccount(_list):
     return _list[random.randint(0, len(_list) - 1)]
 
 
-@borg.on(events.NewMessage(func=lambda e: not e.is_private))
+@borg.on(events.NewMessage(func=lambda e: e.is_private))
 async def my_event_handler(event):
     try:
         if not get_user(event.chat_id):
