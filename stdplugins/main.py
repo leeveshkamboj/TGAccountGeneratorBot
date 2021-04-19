@@ -54,9 +54,6 @@ async def my_event_handler(event):
             if len(msg) > 4096:
                 with io.BytesIO(str.encode(msg)) as out_file:
                     out_file.name = "hits.txt"
-                en(msg) > 4096:
-                with io.BytesIO(str.encode(msg)) as out_file:
-                    out_file.name = "hits.txt"
                     await borg.send_file(
                         event.chat_id,
                         out_file,
@@ -86,6 +83,8 @@ async def my_event_handler(event):
             return
     else:
         await borg.send_message(event.chat_id, joinMsg)
+
+
 
 @borg.on(events.NewMessage)
 async def my_event_handler(event):
