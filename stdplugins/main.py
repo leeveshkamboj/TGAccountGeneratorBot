@@ -2,184 +2,32 @@
 from uniborg.util import admin_cmd
 import time
 import os
+import random
 
+accounts = ["1test@gmail.com:123", "2test@gmail.com:123523", "3test@gmail.com:asdgah", "4test@gmail.com:sadgd","5test@gmail.com:ssdadfh"]
+channelId = -1001313593468
+channelName = "@NordVpn_1"
 
-channel_id = os.environ.get("CHANNEL_ID", None)
-if channel_id:
-    channel_id = int(channel_id)
-
-msg_id = os.environ.get("MSG_ID", None)
-if msg_id:
-    msg_id = int(msg_id)
-
-sticker_delete = os.environ.get("STICKER_DELETE", False)
-if sticker_delete:
-    if "true" in sticker_delete.lower():
-        sticker_delete = True
-    else:
-        sticker_delete = False
-      
-footer = os.environ.get("FOOTER", "")
-if footer:
-    footer = "\n\n" + footer
-
-mainFooter = "\n\n📝 | Note: After Login Send Screenshot. \n▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬\n➙| @PandaZsupport_Bot Send Screenshot \n➙| @PandazProofs Proofs Here"
-
-multiChannelId = {-1001177011841 : "Antivirus"}
-
-multiName = {
-    "Antivirus" : {
-      "mc" : "https://i.imgur.com/EhwhNyI.jpg",
-      "avast" : "https://i.imgur.com/5S4zREv.jpg",
-      "bd" : "https://i.imgur.com/iBlJ3lf.jpg"
-    }
-}
-
-multiFullName = {
-  "mc" : "McAfee",
-  "avast" : "Avast",
-  "bd" : "Bit Defender"
-}
-
-paused = False
-
-
-
-
-def generateMsg(name, content):
-    if "http://" in content.lower() or "https://" in content.lower():
-        return f'''**🔰 {name} Accounts 🔰**
-➖➖➖➖➖➖➖➖➖➖➖➖➖
-Link : {content}
-➖➖➖➖➖➖➖➖➖➖➖➖➖
-❌ Don't change the password else account will stop working soon
-➖➖➖➖➖➖➖➖➖➖➖➖➖
-🔺 How to Open Links
-Link:- https://youtu.be/XkMSDlGEKqQ
-➖➖➖➖➖➖➖➖➖➖➖➖➖
-📝 | Note: After Login Send Screenshot. 
-▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬
-➙| @PandaZsupport_Bot Send Screenshot 
-➙| @PandazProofs Proofs Here'''
-    else:
-        return f"**__🔰{name}🔰__**\n\n" + content + footer
-name = {
-    -1001481026778: "Express VPN",
-    -1001481899343: "Windscribe",
-    -1001122798596: "IP Vanish",
-    -1001251394025: "Hulu",
-    -1001351480003: "DisneyPlus",
-    -1001313593468: "Nord VPN",
-    -1001216655686: "Crunchyroll",
-    -1001177942583: "HMA VPN",
-    -1001386505205: "Kaspersky"
-}
-
-img = {
-    -1001481026778: "https://i.imgur.com/w3n2iY5.jpg",
-    -1001481899343: "https://i.imgur.com/uXyEThc.jpg",
-    -1001122798596: "https://i.imgur.com/mGgAIbl.jpg",
-    -1001251394025: "https://i.imgur.com/NG6M6Eh.jpg",
-    -1001351480003: "https://i.imgur.com/rhXRIKw.jpg",
-    -1001313593468: "https://i.imgur.com/tL2awKR.jpg",
-    -1001216655686: "https://i.imgur.com/Jxuet4U.jpg",
-    -1001177942583: "https://i.imgur.com/151wsmZ.jpg",
-    -1001386505205: "https://i.imgur.com/I85yFig.jpg"
-}
-
+def genAccount(list):
+    return list[random.randint(0, len(accounts) - 1)]
 
 
 @borg.on(events.NewMessage)
-async def my_event_handler(event):                     
-    global channel_id, msg_id, sticker_delete, footer, img, paused, name, multiChannelId, multiName, multiImg, multiFullName
-    if event.text == "/stop":
-        paused = True
-        await event.edit("Bot Stopped.")
-        time.sleep(3)
-        await event.delete()
+async def my_event_handler(event):
+    joinMsg = f"Please Join {channelName} to use this bot."
+    try:
+        perm = await borg.get_permissions(channelId, event.chat_id)
+    except:
+        await borg.send_message(event.chat_id, joinMsg)
         return
-    if event.text == "/start" and event.is_channel:
-        paused = False
-        await event.edit("Bot Started.")
-        time.sleep(3)
-        await event.delete()
-        return
-    if paused:
-        return
-    if event.sticker:
-        if sticker_delete:
-            await event.delete()
-        return
-    if event.chat_id == -1001480955429:
-        await borg.edit_message(event.chat_id, event.message.id, "**" + event.text + "\n\nTaking Request On @DarkFoxMods_bot\n\n📝 | Note: If any mod is not working,\n📝 | just msg us on @darkfoxmods_bot\n📝 | with screenshot as proof\n▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬\n➙| @darkfoxmods Channel\n➙| @darkfoxmods_bot Request Here**", link_preview = False)
-        await borg.forward_messages(-1001480955429, 11, -1001480955429)
-    elif event.chat_id == -1001404860563:
-        await borg.edit_message(event.chat_id, event.message.id, "**" + event.text + mainFooter + "**", link_preview = False)
-        await borg.forward_messages(-1001404860563, 6936, -1001404860563)
+    if perm.has_default_permissions or perm.is_admin:
+        if "/gen" == event.raw_text.lower():
+            await borg.send_message(event.chat_id, genAccount(accounts))
+        if '/start' == event.raw_text.lower():
+            await borg.send_message(event.chat_id, "**Hi**\nUse /gen to geneate account")
+            return
+        if 'yo' == event.raw_text.lower():
+            await event.reply('yo')
+            return
     else:
-        try:
-            if event.chat_id in img.keys():
-                name = {
-                  -1001481026778: "Express VPN",
-                  -1001481899343: "Windscribe",
-                  -1001122798596: "IP Vanish",
-                  -1001251394025: "Hulu",
-                  -1001351480003: "DisneyPlus",
-                  -1001313593468: "Nord VPN",
-                  -1001216655686: "Crunchyroll",
-                  -1001177942583: "HMA VPN",
-                  -1001386505205: "Kaspersky"
-                }
-
-                img = {
-                  -1001481026778: "https://i.imgur.com/w3n2iY5.jpg",
-                  -1001481899343: "https://i.imgur.com/uXyEThc.jpg",
-                  -1001122798596: "https://i.imgur.com/mGgAIbl.jpg",
-                  -1001251394025: "https://i.imgur.com/NG6M6Eh.jpg",
-                  -1001351480003: "https://i.imgur.com/rhXRIKw.jpg",
-                  -1001313593468: "https://i.imgur.com/tL2awKR.jpg",
-                  -1001216655686: "https://i.imgur.com/Jxuet4U.jpg",
-                  -1001177942583: "https://i.imgur.com/151wsmZ.jpg",
-                  -1001386505205: "https://i.imgur.com/I85yFig.jpg"                  
-                }
-                msg = generateMsg(name[event.chat_id], event.text)
-                image = img[event.chat_id]
-            elif event.chat_id in multiChannelId.keys():
-                for name in multiName[multiChannelId[event.chat_id]].keys():
-                    if name in event.text.lower() and "|" in event.text:
-                        image = multiName[multiChannelId[event.chat_id]][name]
-                        msg = generateMsg(multiFullName[name], event.text[event.text.index("|") + 1 :].strip())
-                        break
-                else:
-                    if not event.fwd_from:
-                        try:
-                            await borg.edit_message(event.chat_id, event.message.id, event.text + footer, link_preview = False)
-                        except Exception as err:
-                            print(f"Error - {err}")
-                    if channel_id and msg_id:
-                        await borg.forward_messages(event.chat_id, msg_id, channel_id)
-                    return
-            elif event.chat_id == channel_id:
-                if not event.fwd_from:
-                    try:
-                        await borg.edit_message(event.chat_id, event.message.id, event.text + footer, link_preview = False)
-                    except Exception as err:
-                        print(f"Error - {err}")
-                    if channel_id and msg_id:
-                        await borg.forward_messages(event.chat_id, msg_id, channel_id)
-                    return
-            else:
-                return
-            await event.client.send_message(
-                event.chat_id,
-                msg,
-                file = image,
-                link_preview = False
-            )
-            await event.delete()
-        except Exception as err:
-            print(f"Error - {err}")
-        if channel_id and msg_id:
-            await borg.forward_messages(event.chat_id, msg_id, channel_id)
-
-
+        await borg.send_message(event.chat_id, joinMsg)
