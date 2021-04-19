@@ -46,7 +46,7 @@ async def my_event_handler(event):
 ❤️𝙎𝙝𝙖𝙧𝙚 & 𝙎𝙪𝙥𝙥𝙤𝙧𝙩 **@nordvpn_1**❤️"""
                 await borg.send_message(event.chat_id, msg)
             else:
-                await borg.send_message(event.chat_id, "No hits found")
+                await borg.send_message(event.chat_id, "No account available right now.")
         if '/start' == event.raw_text.lower():
             msg = f"""**Hi {first_name},
 I am an Account Generator Bot
