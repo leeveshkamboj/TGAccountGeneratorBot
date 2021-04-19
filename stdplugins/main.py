@@ -18,7 +18,7 @@ def genAccount(_list):
 
 @borg.on(events.NewMessage)
 async def my_event_handler(event):
-    print(event.text)
+    print(event)
     try:
         if not get_user(event.chat_id):
             add_user(event.chat_id)
@@ -34,11 +34,27 @@ async def my_event_handler(event):
         if "/gen" == event.raw_text.lower():
             accounts = get_all_hits()
             if accounts:
-                msg = genAccount(accounts).hit
+                hit = genAccount(accounts).hit.split(":")
+                msg = f"""𝙃𝙚𝙧𝙚 𝙄𝙨 𝙔𝙤𝙪𝙧 NordVPN 𝘼𝙘𝙘𝙤𝙪𝙣𝙩
+
+𝙀𝙢𝙖𝙞𝙡: `{hit[0]}`
+𝙋𝙖𝙨𝙨: `{hit[1]}`
+𝙂𝙚𝙣𝙚𝙧𝙖𝙩𝙚𝙙 𝘽𝙮: **Walter
+
+**𝙏𝙝𝙖𝙣𝙠 𝙮𝙤𝙪 𝙛𝙤𝙧 𝙪𝙨𝙞𝙣𝙜 𝙢𝙚!
+❤️𝙎𝙝𝙖𝙧𝙚 & 𝙎𝙪𝙥𝙥𝙤𝙧𝙩 **@nordvpn_1**❤️"""
                 await borg.send_message(event.chat_id, msg)
             else:
                 await borg.send_message(event.chat_id, "No hits found")
         if '/start' == event.raw_text.lower():
+            msg = """**Hi Walter,
+I am an Account Generator Bot
+-------------------------------------------------
+I can provide premium accounts of different services
+--------------------------------------------------
+Do /gen** **to generate an account
+--------------------------------------------------
+❤️Brought to You By @PandaZnetwork❤️**"""
             await borg.send_message(event.chat_id, "**Hi**\nUse /gen to geneate account")
             return
         if '/count' == event.raw_text.lower():
