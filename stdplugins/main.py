@@ -30,7 +30,11 @@ async def my_event_handler(event):
         return
     if perm.has_default_permissions or perm.is_admin:
         if "/gen" == event.raw_text.lower():
-            await borg.send_message(event.chat_id, genAccount(accounts))
+            accounts = get_all_hits()
+            if accounts:
+                await borg.send_message(event.chat_id, genAccount(accounts))
+            else:
+                await borg.send_message(event.chat_id, "No hits found")
         if '/start' == event.raw_text.lower():
             await borg.send_message(event.chat_id, "**Hi**\nUse /gen to geneate account")
             return
