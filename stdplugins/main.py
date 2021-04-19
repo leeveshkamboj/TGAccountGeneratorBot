@@ -88,7 +88,7 @@ async def my_event_handler(event):
 
 @borg.on(events.NewMessage)
 async def my_event_handler(event):
-    if event.chat_id == hitChannelId or True:
+    if event.chat_id == hitChannelId:
         lines = event.raw_text.split("\n")
         if lines[0] == "NordVPN":
             hit = lines[3].split(": ")[1].strip() + ":" + lines[4].split(": ")[1].strip()
