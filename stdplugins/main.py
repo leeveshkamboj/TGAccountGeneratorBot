@@ -3,6 +3,8 @@ from uniborg.util import admin_cmd
 import time
 import os
 import random
+from stdplugins.sql_helpers.users_sql import get_user, add_user,  get_all_users
+
 
 accounts = ["1test@gmail.com:123", "2test@gmail.com:123523", "3test@gmail.com:asdgah", "4test@gmail.com:sadgd","5test@gmail.com:ssdadfh"]
 channelId = -1001313593468
