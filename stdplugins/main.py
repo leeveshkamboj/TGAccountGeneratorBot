@@ -92,4 +92,5 @@ async def my_event_handler(event):
         lines = event.raw_text.split("\n")
         if lines[0] == "NordVPN":
             hit = lines[3].split(": ")[1] + ":" + lines[4].split(": ")[1]
-            print(hit) 
+            if not hitExists(hit):
+                addHit(hit)
