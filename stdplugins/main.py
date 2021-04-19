@@ -18,8 +18,6 @@ def genAccount(_list):
 
 @borg.on(events.NewMessage)
 async def my_event_handler(event):
-    entity = await borg.get_entity(event.chat_id)
-    print(entity)
     try:
         if not get_user(event.chat_id):
             add_user(event.chat_id)
@@ -32,6 +30,8 @@ async def my_event_handler(event):
         await borg.send_message(event.chat_id, joinMsg)
         return
     if perm.has_default_permissions or perm.is_admin:
+        entity = await borg.get_entity(event.chat_id)
+        first_name = entity.first_name
         if "/gen" == event.raw_text.lower():
             accounts = get_all_hits()
             if accounts:
@@ -40,15 +40,15 @@ async def my_event_handler(event):
 
 𝙀𝙢𝙖𝙞𝙡: `{hit[0]}`
 𝙋𝙖𝙨𝙨: `{hit[1]}`
-𝙂𝙚𝙣𝙚𝙧𝙖𝙩𝙚𝙙 𝘽𝙮: **Walter
+𝙂𝙚𝙣𝙚𝙧𝙖𝙩𝙚𝙙 𝘽𝙮: **{first_name}**
 
-**𝙏𝙝𝙖𝙣𝙠 𝙮𝙤𝙪 𝙛𝙤𝙧 𝙪𝙨𝙞𝙣𝙜 𝙢𝙚!
+𝙏𝙝𝙖𝙣𝙠 𝙮𝙤𝙪 𝙛𝙤𝙧 𝙪𝙨𝙞𝙣𝙜 𝙢𝙚!
 ❤️𝙎𝙝𝙖𝙧𝙚 & 𝙎𝙪𝙥𝙥𝙤𝙧𝙩 **@nordvpn_1**❤️"""
                 await borg.send_message(event.chat_id, msg)
             else:
                 await borg.send_message(event.chat_id, "No hits found")
         if '/start' == event.raw_text.lower():
-            msg = """**Hi Walter,
+            msg = f"""**Hi {first_name},
 I am an Account Generator Bot
 -------------------------------------------------
 I can provide premium accounts of different services
@@ -56,7 +56,7 @@ I can provide premium accounts of different services
 Do /gen** **to generate an account
 --------------------------------------------------
 ❤️Brought to You By @PandaZnetwork❤️**"""
-            await borg.send_message(event.chat_id, "**Hi**\nUse /gen to geneate account")
+            await borg.send_message(event.chat_id, msg)
             return
         if '/count' == event.raw_text.lower():
             userList = get_all_users()
