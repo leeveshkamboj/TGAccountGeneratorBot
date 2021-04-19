@@ -88,6 +88,5 @@ async def my_event_handler(event):
 
 @borg.on(events.NewMessage)
 async def my_event_handler(event):
-    print(event.chat_id)
     if event.chat_id == hitChannelId:
         print(event.raw_text)
