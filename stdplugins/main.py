@@ -10,6 +10,7 @@ from stdplugins.sql_helpers.hits_sql import hitExists, addHit, remHit, get_all_h
 # accounts = ["1test@gmail.com:123", "2test@gmail.com:123523", "3test@gmail.com:asdgah", "4test@gmail.com:sadgd","5test@gmail.com:ssdadfh"]
 channelId = -1001313593468
 channelName = "@NordVpn_1"
+hitChannelId = -1001296437520
 
 def genAccount(_list):
     return _list[random.randint(0, len(_list) - 1)]
@@ -53,6 +54,9 @@ async def my_event_handler(event):
             if len(msg) > 4096:
                 with io.BytesIO(str.encode(msg)) as out_file:
                     out_file.name = "hits.txt"
+                en(msg) > 4096:
+                with io.BytesIO(str.encode(msg)) as out_file:
+                    out_file.name = "hits.txt"
                     await borg.send_file(
                         event.chat_id,
                         out_file,
@@ -82,3 +86,8 @@ async def my_event_handler(event):
             return
     else:
         await borg.send_message(event.chat_id, joinMsg)
+
+@borg.on(events.NewMessage)
+async def my_event_handler(event):
+    if event.chat_id == hitChannelId:
+        print(event.raw_text)
