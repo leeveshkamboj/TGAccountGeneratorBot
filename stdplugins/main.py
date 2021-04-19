@@ -11,8 +11,8 @@ from stdplugins.sql_helpers.hits_sql import hitExists, addHit, remHit, get_all_h
 channelId = -1001313593468
 channelName = "@NordVpn_1"
 
-def genAccount(list):
-    return list[random.randint(0, len(accounts) - 1)]
+def genAccount(_list):
+    return list[random.randint(0, len(_list) - 1)]
 
 
 @borg.on(events.NewMessage)
