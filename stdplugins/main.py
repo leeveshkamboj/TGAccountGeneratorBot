@@ -69,7 +69,8 @@ async def my_event_handler(event):
             if '/addhit' == event.raw_text.lower()[0:7]:
                 hits = event.raw_text.lower()[8:].split("\n")
                 for hit in hits:
-                    addHit(hit.strip())
+                    if not hitExists(hit):
+                        addHit(hit)
                 await borg.send_message(event.chat_id, f"{len(hits)} Hit(s) added.")
             if '/cleanhits' == event.raw_text.lower():
                 hitList = get_all_hits()
