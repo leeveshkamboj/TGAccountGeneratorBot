@@ -14,7 +14,7 @@ class userlist(BASE):
 userlist.__table__.create(checkfirst=True)
 
 
-def is_banned(userId):
+def get_user(userId):
     try:
         return SESSION.query(userlist).filter(userlist.userId == str(userId)).one()
     except:
