@@ -12,7 +12,7 @@ channelId = -1001313593468
 channelName = "@NordVpn_1"
 
 def genAccount(_list):
-    return list[random.randint(0, len(_list) - 1)]
+    return _list[random.randint(0, len(_list) - 1)]
 
 
 @borg.on(events.NewMessage)
@@ -48,7 +48,7 @@ async def my_event_handler(event):
             else:
                 msg = "**Hits:-**\n\n"
                 for hit in hitList:
-                    msg += (f'=> {hit.hit}')
+                    msg += (f'=> {hit.hit}\n')
                 msg += f'\n**Total {len(hitList)} hits.**'
             if len(msg) > 4096:
                 with io.BytesIO(str.encode(msg)) as out_file:
