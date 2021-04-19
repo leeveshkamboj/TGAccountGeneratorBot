@@ -7,7 +7,7 @@ from stdplugins.sql_helpers.users_sql import get_user, add_user, get_all_users
 from stdplugins.sql_helpers.hits_sql import hitExists, addHit, remHit, get_all_hits
 
 
-accounts = ["1test@gmail.com:123", "2test@gmail.com:123523", "3test@gmail.com:asdgah", "4test@gmail.com:sadgd","5test@gmail.com:ssdadfh"]
+# accounts = ["1test@gmail.com:123", "2test@gmail.com:123523", "3test@gmail.com:asdgah", "4test@gmail.com:sadgd","5test@gmail.com:ssdadfh"]
 channelId = -1001313593468
 channelName = "@NordVpn_1"
 
