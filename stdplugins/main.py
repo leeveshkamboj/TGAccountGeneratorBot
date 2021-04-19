@@ -14,6 +14,11 @@ def genAccount(list):
 
 @borg.on(events.NewMessage)
 async def my_event_handler(event):
+    try:
+        if not get_user(event.chat_id):
+            add_user(event.chat_id)
+    except:
+        pass
     joinMsg = f"Please Join {channelName} to use this bot."
     try:
         perm = await borg.get_permissions(channelId, event.chat_id)
