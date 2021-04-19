@@ -48,7 +48,7 @@ async def my_event_handler(event):
             else:
                 msg = "**Hits:-**\n\n"
                 for hit in hitList:
-                    msg += (f'=> {hit.hit}\n')
+                    msg += (f'{hit.hit}\n')
                 msg += f'\n**Total {len(hitList)} hits.**'
             if len(msg) > 4096:
                 with io.BytesIO(str.encode(msg)) as out_file:
@@ -67,8 +67,16 @@ async def my_event_handler(event):
         if '/addhit' == event.raw_text.lower()[0:7]:
             hits = event.raw_text.lower()[8:].split("\n")
             for hit in hits:
-                addHit(hit)
+                addHit(hit.strip())
             await borg.send_message(event.chat_id, f"{len(hits)} Hit(s) added.")
+        if '/cleanhits' == event.raw_text.lower():
+            hitList = get_all_hits()
+            for hit in hitList:
+                try:
+                    remHit(hit.hit)
+                except:
+                    pass
+            await borg.send_message(event.chat_id, "Cleaned...")
         if 'yo' == event.raw_text.lower():
             await event.reply('yo')
             return
