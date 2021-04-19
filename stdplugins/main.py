@@ -11,7 +11,10 @@ from stdplugins.sql_helpers.hits_sql import hitExists, addHit, remHit, get_all_h
 channelId = -1001313593468
 channelName = "@NordVpn_1"
 
-def genAccount(_list):
+def genAccount(obj):
+    _list = []
+    for item in obj:
+        _list.append(item)
     return _list[random.randint(0, len(_list) - 1)]
 
 
@@ -31,11 +34,10 @@ async def my_event_handler(event):
     if perm.has_default_permissions or perm.is_admin:
         if "/gen" == event.raw_text.lower():
             accounts = get_all_hits()
-            print(accounts)
-            # if accounts:
-            #     await borg.send_message(event.chat_id, genAccount(list(accounts)))
-            # else:
-            #     await borg.send_message(event.chat_id, "No hits found")
+            if accounts:
+                await borg.send_message(event.chat_id, genAccount(accounts))
+            else:
+                await borg.send_message(event.chat_id, "No hits found")
         if '/start' == event.raw_text.lower():
             await borg.send_message(event.chat_id, "**Hi**\nUse /gen to geneate account")
             return
