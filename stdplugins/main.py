@@ -18,6 +18,7 @@ def genAccount(_list):
 
 @borg.on(events.NewMessage)
 async def my_event_handler(event):
+    print(event.text)
     try:
         if not get_user(event.chat_id):
             add_user(event.chat_id)
