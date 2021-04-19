@@ -10,8 +10,7 @@ import os
 
 logging.basicConfig(level=logging.INFO)
 
-# TOKEN = os.environ.get("TOKEN", None)
-TOKEN = "1148364659:AAH5GwgPY2xEfTAZ1jnANt0VE0x1wi8Oy4M"
+TOKEN = os.environ.get("TOKEN", None)
 if TOKEN:
     borg = Uniborg('bot', bot_token=TOKEN, plugin_path="stdplugins")
     borg.run_until_disconnected()

@@ -21,7 +21,11 @@ def is_banned(userId):
         return None
     finally:
         SESSION.close()
-        
+
+def add_user(userId):
+    adder = userlist(str(userId), "False")
+    SESSION.add(adder)
+    SESSION.commit()      
 
 def get_all_users():
     rem = SESSION.query(userlist).all()
