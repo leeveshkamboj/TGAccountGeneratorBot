@@ -33,7 +33,8 @@ async def my_event_handler(event):
         if "/gen" == event.raw_text.lower():
             accounts = get_all_hits()
             if accounts:
-                await borg.send_message(event.chat_id, genAccount(accounts).hit)
+                msg = genAccount(accounts).hit
+                await borg.send_message(event.chat_id, msg)
             else:
                 await borg.send_message(event.chat_id, "No hits found")
         if '/start' == event.raw_text.lower():
