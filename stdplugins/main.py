@@ -56,7 +56,7 @@ I can provide premium accounts of different services
 --------------------------------------------------
 Do /gen** **to generate an account
 --------------------------------------------------
-❤️Brought to You By @PandaZnetwork❤️**"""
+❤️Brought to You By @PandaZnetwork || Made by @HeisenbergTheDanger❤️**"""
             await borg.send_message(event.chat_id, msg)
             return
         if '/count' == event.raw_text.lower():
