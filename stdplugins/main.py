@@ -94,7 +94,7 @@ Do /gen** **to generate an account
                     msg = "**Users:-**\n\n"
                     for user in userList:
                         msg += (f'{user.userId}\n')
-                    msg += f'\n**Total {len(userList)} hits.**'
+                    msg += f'\n**Total {len(userList)} user.**'
                 if len(msg) > 4096:
                     with io.BytesIO(str.encode(msg)) as out_file:
                         out_file.name = "users.txt"
