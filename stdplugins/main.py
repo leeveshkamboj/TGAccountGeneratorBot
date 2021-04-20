@@ -20,7 +20,7 @@ def genAccount(_list):
 @borg.on(events.NewMessage(func=lambda e: e.is_private))
 async def my_event_handler(event):
     try:
-        if not get_user(event.chat_id) and (event.chat_id != channelId || event.chat_id != hitChannelId):
+        if not get_user(event.chat_id) and (event.chat_id != channelId or event.chat_id != hitChannelId):
             add_user(event.chat_id)
     except:
         pass
