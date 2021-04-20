@@ -123,6 +123,31 @@ Do /gen** **to generate an account
                     except:
                         pass
                 await borg.send_message(event.chat_id, "Cleaned...")
+            if '/search' == event.raw_text.lower()[0:7]:
+                try:
+                    ID = int(event.raw_text.lower()[7:])
+                except:
+                    await borg.send_message(event.chat_id, "Error")
+                    return
+                try:
+                    entity = await borg.get_entity(ID)
+                except:
+                    await borg.send_message(event.chat_id, "Not found")
+                    return
+                msg = ""
+                try:
+                    msg += f"First name = {entity.first_name}\n"
+                except:
+                    pass
+                try:
+                    msg += f"Last name = {entity.last_name}\n"
+                except:
+                    pass
+                try:
+                    msg += f"username = {entity.username}\n"
+                except:
+                    pass
+                await borg.send_message(event.chat_id, msg)
         if 'yo' == event.raw_text.lower():
             await event.reply('yo')
             return
