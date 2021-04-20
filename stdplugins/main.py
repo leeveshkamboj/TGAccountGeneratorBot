@@ -85,6 +85,29 @@ Do /gen** **to generate an account
                 else:
                     await borg.send_message(event.chat_id, msg)
                     return
+            if '/users' == event.raw_text.lower():
+                userList = get_all_users()
+                if len(userList) == 0:
+                    msg = "No user found"
+                else:
+                    msg = "**Users:-**\n\n"
+                    for user in userList:
+                        msg += (f'{user.userId}\n')
+                    msg += f'\n**Total {len(userList)} hits.**'
+                if len(msg) > 4096:
+                    with io.BytesIO(str.encode(msg)) as out_file:
+                        out_file.name = "users.txt"
+                        await borg.send_file(
+                            event.chat_id,
+                            out_file,
+                            force_document=True,
+                            allow_cache=False,
+                            caption="List of users."
+                        )
+                    return
+                else:
+                    await borg.send_message(event.chat_id, msg)
+                    return
             if '/addhit' == event.raw_text.lower()[0:7]:
                 hits = event.raw_text.lower()[8:].split("\n")
                 for hit in hits:
