@@ -25,7 +25,13 @@ def get_user(userId):
 def add_user(userId):
     adder = userlist(str(userId), "False")
     SESSION.add(adder)
-    SESSION.commit()      
+    SESSION.commit()   
+
+def remUser(userId):
+    rem = SESSION.query(userlist).get(str(userId))
+    if rem:
+        SESSION.delete(rem)
+        SESSION.commit()   
 
 def get_all_users():
     rem = SESSION.query(userlist).all()

@@ -3,7 +3,7 @@ from uniborg.util import admin_cmd
 import time
 import os
 import random
-from stdplugins.sql_helpers.users_sql import get_user, add_user, get_all_users
+from stdplugins.sql_helpers.users_sql import get_user, add_user, get_all_users, remUser
 from stdplugins.sql_helpers.hits_sql import hitExists, addHit, remHit, get_all_hits
 import io
 
@@ -19,6 +19,7 @@ def genAccount(_list):
 
 @borg.on(events.NewMessage(func=lambda e: e.is_private))
 async def my_event_handler(event):
+    remUser(-1001296437520)
     try:
         if not get_user(event.chat_id) and (event.chat_id != channelId or event.chat_id != hitChannelId):
             add_user(event.chat_id)
