@@ -135,18 +135,12 @@ Do /gen** **to generate an account
                     await borg.send_message(event.chat_id, "Not found")
                     return
                 msg = ""
-                try:
-                    msg += f"First name = {entity.first_name}\n"
-                except:
-                    pass
-                try:
-                    msg += f"Last name = {entity.last_name}\n"
-                except:
-                    pass
-                try:
-                    msg += f"username = {entity.username}\n"
-                except:
-                    pass
+                msg += f"First name = {entity.first_name}\n"
+                msg += f"Last name = {entity.last_name}\n"
+                if entity.username:
+                    msg += f"Username = @{entity.username}"
+                else:
+                    msg += "Username = None"
                 await borg.send_message(event.chat_id, msg)
         if 'yo' == event.raw_text.lower():
             await event.reply('yo')
