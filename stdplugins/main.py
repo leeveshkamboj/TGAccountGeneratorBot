@@ -59,10 +59,10 @@ Do /gen to generate an account
 ❤️Brought to You By @PandaZnetwork || Made by @HeisenbergTheDanger❤️**"""
             await borg.send_message(event.chat_id, msg)
             return
-        if '/count' == event.raw_text.lower():
-            userList = get_all_users()
-            await borg.send_message(event.chat_id, f"{len(userList)} users.")
         if event.chat_id in ownerIDs:
+            if '/count' == event.raw_text.lower():
+                userList = get_all_users()
+                await borg.send_message(event.chat_id, f"{len(userList)} users.")
             if '/hits' == event.raw_text.lower():
                 hitList = get_all_hits()
                 if len(hitList) == 0:
