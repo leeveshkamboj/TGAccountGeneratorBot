@@ -142,6 +142,37 @@ Do /gen to generate an account
                 else:
                     msg += "Username = None"
                 await borg.send_message(event.chat_id, msg)
+            elif event.raw_text == "/broadcast":
+                try:
+                    previous_message = await event.get_reply_message()
+                    if previous_message.media:
+                        await borg.send_message(event.chat_id, "Reply to a text msg")
+                        time.sleep(1)
+                        await event.delete()
+                        return
+                    try:
+                        msg = previous_message.text
+                    except:
+                        await borg.send_message(event.chat_id, event.message.id, "Reply to a text msg")
+                        time.sleep(1)
+                        await event.delete()
+                        return
+                    userList = get_all_users()
+                    if len(userList) == 0:
+                        msg = "No user found"
+                    else:
+                        await borg.send_message(event.chat_id, f"Sending to {len(userList)} users.")
+                        err = 0 
+                        succ = 0
+                        for user in userList:
+                            try:
+                                await borg.send_message(user.userId, msg)
+                                succ += 1
+                            except:
+                                err += 1
+                        await borg.send_message(event.chat_id, f"Successfully sent to {succ} users with {err} errors.")
+                except Exception as error:
+                    print(error)
         if 'yo' == event.raw_text.lower():
             await event.reply('yo')
             return
