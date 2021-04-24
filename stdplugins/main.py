@@ -172,6 +172,7 @@ Do /gen to generate an account
                                 err += 1
                         await borg.send_message(event.chat_id, f"Successfully sent to {succ} users with {err} errors.")
                 except Exception as error:
+                    await borg.send_message(event.chat_id, "Reply to a text msg")
                     print(error)
         if 'yo' == event.raw_text.lower():
             await event.reply('yo')
