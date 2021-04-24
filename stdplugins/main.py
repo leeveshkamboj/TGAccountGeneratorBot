@@ -166,10 +166,11 @@ Do /gen to generate an account
                         succ = 0
                         for user in userList:
                             try:
-                                await borg.send_message(user.userId, msg)
+                                await borg.send_message(int(user.userId), msg)
                                 succ += 1
-                            except:
+                            except Exception as e:
                                 err += 1
+                                print(e)
                         await borg.send_message(event.chat_id, f"Successfully sent to {succ} users with {err} errors.")
                 except Exception as error:
                     await borg.send_message(event.chat_id, "Reply to a text msg")
