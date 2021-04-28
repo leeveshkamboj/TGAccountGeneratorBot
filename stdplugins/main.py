@@ -13,7 +13,7 @@ channelName = "@NordVpn_1"
 hitChannelId = -1001296437520
 hitChannelId = -1001224465755
 ownerIDs = [630654925, 1111214141]
-maintenanceMode = True
+maintenanceMode = False
 
 def genAccount(_list):
     return _list[random.randint(0, len(_list) - 1)]
@@ -190,11 +190,9 @@ Do /gen to generate an account
 
 @borg.on(events.NewMessage)
 async def my_event_handler(event):
-    print(event, "\n\n")
     if event.chat_id == hitChannelId:
         lines = event.raw_text.split("\n")
         if lines[0] == "NordVPN":
             hit = lines[3].split(": ")[1].strip() + ":" + lines[4].split(": ")[1].strip()
             if not hitExists(hit):
                 addHit(hit)
-                print(f"Hit: {hit} added.")
