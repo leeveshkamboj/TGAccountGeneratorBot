@@ -13,6 +13,7 @@ channelName = "@NordVpn_1"
 hitChannelId = -1001296437520
 hitChannelId = -1001224465755
 ownerIDs = [630654925, 1111214141]
+maintenanceMode = True
 
 def genAccount(_list):
     return _list[random.randint(0, len(_list) - 1)]
@@ -35,6 +36,9 @@ async def my_event_handler(event):
         entity = await borg.get_entity(event.chat_id)
         first_name = entity.first_name
         if "/gen" == event.raw_text.lower():
+            if maintenanceMode and event.chat_id not in ownerIDs:
+                borg.send_message(event.chat_id, "Bot is under maintenance.")
+                return
             accounts = get_all_hits()
             if accounts:
                 hit = genAccount(accounts).hit.split(":")
