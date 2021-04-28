@@ -11,6 +11,7 @@ import io
 channelId = -1001313593468
 channelName = "@NordVpn_1"
 hitChannelId = -1001296437520
+hitChannelId = -1001224465755
 ownerIDs = [630654925, 1111214141]
 
 def genAccount(_list):
