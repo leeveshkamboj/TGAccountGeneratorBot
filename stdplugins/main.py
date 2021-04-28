@@ -191,3 +191,4 @@ async def my_event_handler(event):
             hit = lines[3].split(": ")[1].strip() + ":" + lines[4].split(": ")[1].strip()
             if not hitExists(hit):
                 addHit(hit)
+                print(f"Hit: {hit} added.")
