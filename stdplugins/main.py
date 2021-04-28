@@ -37,7 +37,7 @@ async def my_event_handler(event):
         first_name = entity.first_name
         if "/gen" == event.raw_text.lower():
             if maintenanceMode and event.chat_id not in ownerIDs:
-                borg.send_message(event.chat_id, "Bot is under maintenance.")
+                await borg.send_message(event.chat_id, "Bot is under maintenance.")
                 return
             accounts = get_all_hits()
             if accounts:
