@@ -186,6 +186,7 @@ Do /gen to generate an account
 
 @borg.on(events.NewMessage)
 async def my_event_handler(event):
+    print(event, "\n\n")
     if event.chat_id == hitChannelId:
         lines = event.raw_text.split("\n")
         if lines[0] == "NordVPN":
