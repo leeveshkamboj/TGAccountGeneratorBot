@@ -63,7 +63,7 @@ async def my_event_handler(event):
             if maintenanceMode and event.chat_id not in ownerIDs:
                 await borg.send_message(event.chat_id, "Bot is under maintenance.")
                 return
-            if not dailyLimitData[event.id]:
+            if event.id not in dailyLimitData.keys():
                 dailyLimitData[event.id] = 1
             else:
                 if dailyLimitData[event.id] >= dailyLimit:
