@@ -7,6 +7,7 @@ import random
 from stdplugins.sql_helpers.users_sql import get_user, add_user, get_all_users
 from stdplugins.sql_helpers.hits_sql import hitExists, addHit, remHit, get_all_hits
 import io
+import requests
 
 
 channelId = -1001313593468
@@ -16,6 +17,8 @@ hitChannelId = 0
 ownerIDs = [630654925, 1111214141]
 maintenanceMode = False
 dailyLimit = 3
+botToken = "1202514912:AAE2yMJiiRTbP2nXYhp2ksHPjJYe5GlVCxo"
+
 
 
 
@@ -24,6 +27,12 @@ dailyLimitData = {}
 
 def reset():
     global dailyLimitData
+    count = 0
+    for ID in dailyLimitData.keys():
+        count += dailyLimitData[ID]
+    msg = f"Total {count} accounts generated today."
+    url = f"https://api.telegram.org/bot{botToken}/sendMessage?chat_id={ownerIDs[0]}&text={msg}"
+    requests.get(url)
     dailyLimitData = {}
     print('Daily limit reset.')
     return
@@ -150,6 +159,11 @@ Do /gen to generate an account
                     except:
                         pass
                 await borg.send_message(event.chat_id, "Cleaned...")
+            if '/dailydata' == event.raw_text.lower():
+                count = 0
+                for ID in dailyLimitData.keys():
+                    count += dailyLimitData[ID]
+                await borg.send_message(event.chat_id, f"Total {count} accounts generated today till now.")
             if '/search' == event.raw_text.lower()[0:7]:
                 try:
                     ID = int(event.raw_text.lower()[7:])
@@ -228,4 +242,4 @@ schedule.every().day.at("00:00").do(reset)
 
 while True:
     schedule.run_pending()
-    time.sleep(50) # wait one minute
+    time.sleep(50) 
