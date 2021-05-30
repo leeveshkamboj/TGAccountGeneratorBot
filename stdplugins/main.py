@@ -164,6 +164,8 @@ Do /gen to generate an account
                 for ID in dailyLimitData.keys():
                     count += dailyLimitData[ID]
                 await borg.send_message(event.chat_id, f"Total {count} accounts generated today till now.")
+            if '/reset' == event.raw_text.lower():
+                reset()    
             if '/search' == event.raw_text.lower()[0:7]:
                 try:
                     ID = int(event.raw_text.lower()[7:])
