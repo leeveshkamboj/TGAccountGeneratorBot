@@ -240,6 +240,6 @@ async def my_event_handler(event):
 
 schedule.every().day.at("00:00").do(reset)
 
-while True:
-    schedule.run_pending()
-    time.sleep(50) 
+# while True:
+#     schedule.run_pending()
+#     time.sleep(50) 
