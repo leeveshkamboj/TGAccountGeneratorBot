@@ -1,3 +1,4 @@
 telethon
 sqlalchemy
 psycopg2
+schedule

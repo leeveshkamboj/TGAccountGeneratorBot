@@ -1,6 +1,7 @@
 ﻿from telethon import events, Button
 from uniborg.util import admin_cmd
 import time
+import schedule
 import os
 import random
 from stdplugins.sql_helpers.users_sql import get_user, add_user, get_all_users
@@ -10,10 +11,24 @@ import io
 
 channelId = -1001313593468
 channelName = "@NordVpn_1"
-hitChannelId = -1001296437520
-# hitChannelId = -1001224465755
+# hitChannelId = -1001296437520
+hitChannelId = 0
 ownerIDs = [630654925, 1111214141]
 maintenanceMode = False
+dailyLimit = 3
+
+
+
+dailyLimitData = {}
+
+
+def reset():
+    global dailyLimitData
+    dailyLimitData = {}
+    print('Daily limit reset.')
+    return
+
+
 
 def genAccount(_list):
     return _list[random.randint(0, len(_list) - 1)]
@@ -39,6 +54,13 @@ async def my_event_handler(event):
             if maintenanceMode and event.chat_id not in ownerIDs:
                 await borg.send_message(event.chat_id, "Bot is under maintenance.")
                 return
+            if not dailyLimitData[event.id]:
+                dailyLimitData[event.id] = 1
+            else:
+                if dailyLimitData[event.id] >= dailyLimit:
+                    await borg.send_message(event.chat_id, "Daily limit exceeded.")
+                    return
+                dailyLimitData[event.id] += 1
             accounts = get_all_hits()
             if accounts:
                 hit = genAccount(accounts).hit.split(":")
@@ -190,9 +212,20 @@ Do /gen to generate an account
 
 @borg.on(events.NewMessage)
 async def my_event_handler(event):
-    if event.chat_id == hitChannelId:
+    if hitChannelId and event.chat_id == hitChannelId:
         lines = event.raw_text.split("\n")
         if lines[0] == "NordVPN":
             hit = lines[3].split(": ")[1].strip() + ":" + lines[4].split(": ")[1].strip()
             if not hitExists(hit):
                 addHit(hit)
+
+
+
+
+
+
+schedule.every().day.at("00:00").do(reset)
+
+while True:
+    schedule.run_pending()
+    time.sleep(50) # wait one minute
