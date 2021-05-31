@@ -160,11 +160,6 @@ Do /gen to generate an account
                     except:
                         pass
                 await borg.send_message(event.chat_id, "Cleaned...")
-            if '/dailydata' == event.raw_text.lower():
-                count = 0
-                for ID in dailyLimitData.keys():
-                    count += dailyLimitData[ID]
-                await borg.send_message(event.chat_id, f"Total {count} accounts generated today till now.")
             if '/reset' == event.raw_text.lower():
                 reset() 
                 await borg.send_message(event.chat_id, "Done")   
