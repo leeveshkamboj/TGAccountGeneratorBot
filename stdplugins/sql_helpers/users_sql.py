@@ -6,12 +6,12 @@ class userlist(BASE):
     __tablename__ = "userlist"
     userId = Column(String(14), primary_key=True)
     isBanned = Column(String(100))
-    dailyLimit = Column(String(5))
+    dailylimit = Column(String(5))
 
-    def __init__(self, userId, isBanned, dailyLimit):
+    def __init__(self, userId, isBanned, dailylimit):
         self.userId = userId
         self.isBanned = isBanned
-        self.dailyLimit = dailyLimit
+        self.dailylimit = dailylimit
 
 userlist.__table__.create(checkfirst=True)
 
