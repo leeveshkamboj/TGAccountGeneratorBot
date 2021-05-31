@@ -36,7 +36,7 @@ async def my_event_handler(event):
             add_user(event.chat_id)
     except:
         pass
-    joinMsg = f"Please Join {channelName} to use this bot."
+    joinMsg = f"To access this bot, join {channelName} and then click on /start"
     try:
         perm = await borg.get_permissions(channelId, event.chat_id)
     except:
