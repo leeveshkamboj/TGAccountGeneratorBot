@@ -6,10 +6,12 @@ class userlist(BASE):
     __tablename__ = "userlist"
     userId = Column(String(14), primary_key=True)
     isBanned = Column(String(100))
+    dailyLimit = Column(String(5))
 
-    def __init__(self, userId, isBanned):
+    def __init__(self, userId, isBanned, dailyLimit):
         self.userId = userId
         self.isBanned = isBanned
+        self.dailyLimit = dailyLimit
 
 userlist.__table__.create(checkfirst=True)
 
@@ -23,7 +25,7 @@ def get_user(userId):
         SESSION.close()
 
 def add_user(userId):
-    adder = userlist(str(userId), "False")
+    adder = userlist(str(userId), "False", "0")
     SESSION.add(adder)
     SESSION.commit()   
 
