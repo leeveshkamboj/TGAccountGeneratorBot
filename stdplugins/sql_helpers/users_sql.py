@@ -41,6 +41,7 @@ def get_all_users():
     return rem
 
 def updateLimit(userId):
+    print(SESSION.query(userlist).filter(userlist.userId == str(userId)).one().dailylimit)
     SESSION.query(userlist).filter(userlist.userId == str(userId)).update({userlist.dailylimit : str(int(userlist.dailylimit) + 1)})
     return True
 
