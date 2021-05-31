@@ -242,7 +242,6 @@ async def my_event_handler(event):
 
 
 
-
 schedule.every().day.at("00:00").do(reset)
 
 # while True:
