@@ -53,7 +53,6 @@ def resetDailyLimit():
     return True
 
 def exceededLimitUsers(dailyLimit):
-    rem = SESSION.query(userlist).filter(userlist.dailylimit == str(dailyLimit)).all()
     rem = SESSION.query(userlist).filter(userlist.dailylimit >= dailyLimit).all()
     SESSION.close()
     return rem
