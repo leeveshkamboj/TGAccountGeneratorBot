@@ -50,3 +50,8 @@ def resetDailyLimit():
     SESSION.query(userlist).update({userlist.dailylimit : "0"})
     SESSION.commit()
     return True
+
+def exceededLimitUsers(dailyLimit):
+    rem = SESSION.query(userlist).filter(userlist.dailylimit >= dailyLimit).all()
+    SESSION.close()
+    return rem

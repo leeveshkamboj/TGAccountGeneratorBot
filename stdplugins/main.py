@@ -4,7 +4,7 @@ import time
 import schedule
 import os
 import random
-from stdplugins.sql_helpers.users_sql import get_user, add_user, get_all_users, updateLimit, resetDailyLimit
+from stdplugins.sql_helpers.users_sql import get_user, add_user, get_all_users, updateLimit, resetDailyLimit, exceededLimitUsers
 from stdplugins.sql_helpers.hits_sql import hitExists, addHit, remHit, get_all_hits
 import io
 import requests
@@ -155,6 +155,13 @@ Do /gen to generate an account
                         pass
                 await borg.send_message(event.chat_id, "Cleaned...")
             if '/reset' == event.raw_text.lower():
+                msg = "Limit Has Been Reset , You can Generate Your Accounts Now Now !"
+                users = exceededLimitUsers(dailyLimit)
+                for user in users:
+                    try:
+                        await borg.send_message(int(user.userId), msg)
+                    except Exception as e:
+                        print(e)
                 reset() 
                 await borg.send_message(event.chat_id, "Done")   
             if '/search' == event.raw_text.lower()[0:7]:
