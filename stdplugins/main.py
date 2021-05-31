@@ -157,14 +157,7 @@ Do /gen to generate an account
                         pass
                 await borg.send_message(event.chat_id, "Cleaned...")
             if '/reset' == event.raw_text.lower():
-                msg = "Limit Has Been Reset , You can Generate Your Accounts Now Now !"
-                users = exceededLimitUsers(dailyLimit)
-                for user in users:
-                    try:
-                        await borg.send_message(int(user.userId), msg)
-                    except Exception as e:
-                        print(e)
-                reset() 
+                await reset() 
                 await borg.send_message(event.chat_id, "Done")   
             if '/search' == event.raw_text.lower()[0:7]:
                 try:
@@ -225,11 +218,17 @@ Do /gen to generate an account
         await borg.send_message(event.chat_id, joinMsg)
 
 async def reset():
+    msg = "Limit Has Been Reset , You can Generate Your Accounts Now Now !"
+    users = exceededLimitUsers(dailyLimit)
+    for user in users:
+        try:
+            await borg.send_message(int(user.userId), msg)
+        except Exception as e:
+            print(e)
     msg = "Bot reseted."
     url = f"https://api.telegram.org/bot{botToken}/sendMessage?chat_id={ownerIDs[0]}&text={msg}"
     resetDailyLimit()
     requests.get(url)
-    print('Daily limit reset.')
 
 
 @borg.on(events.NewMessage)
