@@ -4,7 +4,7 @@ import time
 import schedule
 import os
 import random
-from stdplugins.sql_helpers.users_sql import get_user, add_user, get_all_users
+from stdplugins.sql_helpers.users_sql import get_user, add_user, get_all_users, resetDailyLimit
 from stdplugins.sql_helpers.hits_sql import hitExists, addHit, remHit, get_all_hits
 import io
 import requests
@@ -22,18 +22,12 @@ botToken = "1202514912:AAE2yMJiiRTbP2nXYhp2ksHPjJYe5GlVCxo"
 
 
 
-dailyLimitData = {}
-
 
 def reset():
-    global dailyLimitData
-    count = 0
-    for ID in dailyLimitData.keys():
-        count += dailyLimitData[ID]
-    msg = f"Total {count} accounts generated today."
+    msg = "Bot reseted."
     url = f"https://api.telegram.org/bot{botToken}/sendMessage?chat_id={ownerIDs[0]}&text={msg}"
+    resetDailyLimit()
     requests.get(url)
-    dailyLimitData = {}
     print('Daily limit reset.')
     return
 
