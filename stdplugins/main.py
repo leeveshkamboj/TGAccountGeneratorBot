@@ -64,6 +64,7 @@ async def my_event_handler(event):
                 if int(user.dailylimit) >= dailyLimit:
                     await borg.send_message(event.chat_id, "Daily limit exceeded.")
                     return
+                updateLimit(event.chat_id)
             #     dailyLimitData[event.chat_id] += 1
             accounts = get_all_hits()
             if accounts:
