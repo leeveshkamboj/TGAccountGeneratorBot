@@ -63,13 +63,14 @@ async def my_event_handler(event):
             if maintenanceMode and event.chat_id not in ownerIDs:
                 await borg.send_message(event.chat_id, "Bot is under maintenance.")
                 return
-            if event.chat_id not in dailyLimitData.keys():
-                dailyLimitData[event.chat_id] = 1
+            user = get_user(event.chat_id)
+            if not user:
+                add_user(event.chat_id)
             else:
-                if dailyLimitData[event.chat_id] >= dailyLimit:
+                if user.dailyLimit >= dailyLimit:
                     await borg.send_message(event.chat_id, "Daily limit exceeded.")
                     return
-                dailyLimitData[event.chat_id] += 1
+            #     dailyLimitData[event.chat_id] += 1
             accounts = get_all_hits()
             if accounts:
                 hit = genAccount(accounts).hit.split(":")
