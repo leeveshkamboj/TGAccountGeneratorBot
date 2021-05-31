@@ -39,3 +39,9 @@ def get_all_users():
     rem = SESSION.query(userlist).all()
     SESSION.close()
     return rem
+
+
+def resetDailyLimit():
+    update_statement = userlist.update().values(dailylimit = "0")
+
+    SESSION.execute(update_statement)
