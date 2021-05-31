@@ -25,16 +25,6 @@ botToken = "1202514912:AAE2yMJiiRTbP2nXYhp2ksHPjJYe5GlVCxo"
 
 
 
-# def reset():
-#     msg = "Bot reseted."
-#     url = f"https://api.telegram.org/bot{botToken}/sendMessage?chat_id={ownerIDs[0]}&text={msg}"
-#     resetDailyLimit()
-#     requests.get(url)
-#     print('Daily limit reset.')
-#     return
-
-
-
 def genAccount(_list):
     return _list[random.randint(0, len(_list) - 1)]
 
@@ -246,6 +236,5 @@ async def my_event_handler(event):
 
 
 scheduler = AsyncIOScheduler(timezone="Asia/Kolkata")
-# scheduler.add_job(reset, trigger="cron", hour=24)
-scheduler.add_job(reset, 'interval', seconds=60)
+scheduler.add_job(reset, 'interval', hour=24)
 scheduler.start()
