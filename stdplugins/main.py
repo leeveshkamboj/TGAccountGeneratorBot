@@ -233,6 +233,10 @@ async def my_event_handler(event):
             if not hitExists(hit):
                 addHit(hit)
 
+@borg.on(events)
+async def my_event_handler(event):
+    if event.chat_id == -1001194635704:
+        print(event)
 
 
 
