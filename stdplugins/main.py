@@ -1,13 +1,14 @@
 ﻿from telethon import events, Button
 from uniborg.util import admin_cmd
 import time
-import schedule
 import os
 import random
 from stdplugins.sql_helpers.users_sql import get_user, add_user, get_all_users, updateLimit, resetDailyLimit, exceededLimitUsers
 from stdplugins.sql_helpers.hits_sql import hitExists, addHit, remHit, get_all_hits
 import io
 import requests
+
+
 
 
 channelId = -1001313593468
@@ -23,13 +24,13 @@ botToken = "1202514912:AAE2yMJiiRTbP2nXYhp2ksHPjJYe5GlVCxo"
 
 
 
-def reset():
-    msg = "Bot reseted."
-    url = f"https://api.telegram.org/bot{botToken}/sendMessage?chat_id={ownerIDs[0]}&text={msg}"
-    resetDailyLimit()
-    requests.get(url)
-    print('Daily limit reset.')
-    return
+# def reset():
+#     msg = "Bot reseted."
+#     url = f"https://api.telegram.org/bot{botToken}/sendMessage?chat_id={ownerIDs[0]}&text={msg}"
+#     resetDailyLimit()
+#     requests.get(url)
+#     print('Daily limit reset.')
+#     return
 
 
 
@@ -222,6 +223,12 @@ Do /gen to generate an account
     else:
         await borg.send_message(event.chat_id, joinMsg)
 
+async def reset():
+    msg = "Bot reseted."
+    url = f"https://api.telegram.org/bot{botToken}/sendMessage?chat_id={ownerIDs[0]}&text={msg}"
+    resetDailyLimit()
+    requests.get(url)
+    print('Daily limit reset.')
 
 
 @borg.on(events.NewMessage)
@@ -233,17 +240,11 @@ async def my_event_handler(event):
             if not hitExists(hit):
                 addHit(hit)
 
-@borg.on(events.NewMessage)
-async def my_event_handler(event):
-    if event.chat_id == -1001194635704:
-        print(event)
 
 
 
 
 
-schedule.every().day.at("00:00").do(reset)
-
-# while True:
-#     schedule.run_pending()
-#     time.sleep(50) 
+scheduler = AsyncIOScheduler(timezone="Asia/Kolkata")
+scheduler.add_job(reset, trigger="cron", hour=24)
+scheduler.start()
