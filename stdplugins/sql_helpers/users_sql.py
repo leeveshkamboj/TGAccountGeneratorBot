@@ -42,9 +42,12 @@ def get_all_users():
 
 def updateLimit(userId):
     presentLimit = int(SESSION.query(userlist).filter(userlist.userId == str(userId)).one().dailylimit)
+    print(presentLimit)
     SESSION.query(userlist).filter(userlist.userId == str(userId)).update({userlist.dailylimit : str(presentLimit + 1)})
+    SESSION.commit()  
     return True
 
 def resetDailyLimit():
     SESSION.query(userlist).update({userlist.dailylimit : "0"})
+    SESSION.commit()
     return True
