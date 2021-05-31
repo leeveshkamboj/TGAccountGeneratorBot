@@ -42,6 +42,5 @@ def get_all_users():
 
 
 def resetDailyLimit():
-    update_statement = userlist.update().values(dailylimit = "0")
-
-    SESSION.execute(update_statement)
+    SESSION.query(BankAccount).update({userlist.dailylimit : "0"})
+    return True
