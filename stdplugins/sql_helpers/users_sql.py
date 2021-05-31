@@ -2,6 +2,7 @@ from sqlalchemy import Column, String
 from stdplugins.sql_helpers import SESSION, BASE
 
 
+
 class userlist(BASE):
     __tablename__ = "userlist"
     userId = Column(String(14), primary_key=True)
@@ -52,6 +53,7 @@ def resetDailyLimit():
     return True
 
 def exceededLimitUsers(dailyLimit):
-    rem = SESSION.query(userlist).filter(int(userlist.dailylimit) >= dailyLimit).all()
+    rem = SESSION.query(userlist).filter(userlist.dailylimit == str(dailyLimit)).all()
+    rem = SESSION.query(userlist).filter(userlist.dailylimit >= dailyLimit).all()
     SESSION.close()
     return rem

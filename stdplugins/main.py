@@ -223,6 +223,11 @@ Do /gen to generate an account
         await borg.send_message(event.chat_id, joinMsg)
 
 
+@borg.on(events)
+async def my_event_handler(event):
+    if event.chat_id == -1001194635704:
+        print(event, "\n\n\n")
+
 
 @borg.on(events.NewMessage)
 async def my_event_handler(event):
@@ -232,7 +237,6 @@ async def my_event_handler(event):
             hit = lines[3].split(": ")[1].strip() + ":" + lines[4].split(": ")[1].strip()
             if not hitExists(hit):
                 addHit(hit)
-
 
 
 
