@@ -15,15 +15,14 @@ hits.__table__.create(checkfirst=True)
 
 
 def hitExists(hit):
-    # try:
-    if True:
+    try:
         hit = SESSION.query(hits).filter(hits.hit == str(hit)).one()
         if hit:
             return hit
-    # except:
-    #     return False
-    # finally:
-    #     SESSION.close()
+    except:
+        return False
+    finally:
+        SESSION.close()
 
 def addHit(hit):
     adder = hits(hit = str(hit))

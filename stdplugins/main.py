@@ -175,6 +175,9 @@ Do /gen to generate an account
                         hit=hit.strip()
                         hit = hit.split(" ")[0]
                         if ":" in hit:
+                            if hit[0] == "[":
+                                mail, pwd = hit.split(":", maxsplit = 2)
+                                hit = mail[mail.index("[") + 1 : mail.index("]")] + ":" + pwd
                             if not hitExists(hit):
                                 addHit(hit)
                                 count += 1
