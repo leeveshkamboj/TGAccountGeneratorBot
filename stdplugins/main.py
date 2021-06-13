@@ -191,7 +191,7 @@ Do /gen to generate an account
                         hit=hit.strip()
                         hit = hit.split(" ")[0]
                         if ":" in hit:
-                            hitID = hitExists(hit, acc).hitID
+                            hitID = hitExists(hit).hitID
                             if hitID:
                                 remHit(hitID)
                                 count += 1
