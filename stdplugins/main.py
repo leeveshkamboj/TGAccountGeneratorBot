@@ -176,7 +176,7 @@ Do /gen to generate an account
                                 addHit(hit)
                                 count += 1
                     await conv.send_message(f"{count} Hit(s) added.")
-            if '/removehits' == event.raw_text.lower():
+            if '/deletehits' == event.raw_text.lower():
                 async with borg.conversation(event.chat_id) as conv:
                     await conv.send_message('Send hits you want to remove.')
                     try:
