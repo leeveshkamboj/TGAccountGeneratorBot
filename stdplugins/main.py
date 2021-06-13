@@ -19,12 +19,28 @@ channelName = "@NordVpn_1"
 hitChannelId = 0
 repotGroupID = -1001206527793
 ownerIDs = [630654925, 1111214141]
-maintenanceMode = False
+maintenanceMode = True
 dailyLimit = 3
 botToken = "1202514912:AAE2yMJiiRTbP2nXYhp2ksHPjJYe5GlVCxo"
 
 
+reportMsg = """**New Report**
 
+**Hit Details:-**
+
+ID => `{hitID}`
+Account => `{account}`
+Email => `{email}`
+Password => `{pwd}`
+Combo=> `{combo}`
+
+**User Details:-**
+
+ID => `{userID}`
+First Name => `{first_name}`
+Last Name => `{last_name}`
+Username => {username}
+"""
 
 
 def genAccount(_list):
