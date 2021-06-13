@@ -286,7 +286,7 @@ async def genAcc(event):
             await event.answer("Hits already removed.", alert=True)
         
     except Exception as e:
-        if groupId:
+        if repotGroupID:
             await borg.send_message(repotGroupID, f"Error - {e}")
         else:
             await borg.send_message(ownerIDs[0], f"Error - {e}")
