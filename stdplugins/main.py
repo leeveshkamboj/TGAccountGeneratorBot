@@ -176,6 +176,26 @@ Do /gen to generate an account
                                 addHit(hit)
                                 count += 1
                     await conv.send_message(f"{count} Hit(s) added.")
+            if '/removehits' == event.raw_text.lower():
+                async with borg.conversation(event.chat_id) as conv:
+                    await conv.send_message('Send hits you want to remove.')
+                    try:
+                        response = await conv.get_response()
+                    except:
+                        return
+                    if response.text[0] == "/":
+                        return
+                    hits = response.text.split("\n")
+                    count = 0
+                    for hit in hits:
+                        hit=hit.strip()
+                        hit = hit.split(" ")[0]
+                        if ":" in hit:
+                            hitID = hitExists(hit, acc).hitID
+                            if hitID:
+                                remHit(hitID)
+                                count += 1
+                    await conv.send_message(f"{count} Hit(s) removed.")
             if '/cleanhits' == event.raw_text.lower():
                 hitList = get_all_hits()
                 for hit in hitList:
