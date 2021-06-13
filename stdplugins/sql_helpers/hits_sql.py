@@ -29,8 +29,8 @@ def addHit(hit):
     SESSION.commit()
 
 
-def remHit(hit):
-    rem = SESSION.query(hits).get(str(hit))
+def remHit(hitID):
+    rem = SESSION.query(hits).get(int(hitID))
     if rem:
         SESSION.delete(rem)
         SESSION.commit()

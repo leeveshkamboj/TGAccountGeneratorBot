@@ -167,7 +167,7 @@ Do /gen to generate an account
                 hitList = get_all_hits()
                 for hit in hitList:
                     try:
-                        remHit(hit.hit)
+                        remHit(hit.hitID)
                     except:
                         pass
                 await borg.send_message(event.chat_id, "Cleaned...")
