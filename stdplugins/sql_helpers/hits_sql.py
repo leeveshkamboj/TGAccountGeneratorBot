@@ -16,8 +16,9 @@ hits.__table__.create(checkfirst=True)
 
 def hitExists(hit):
     try:
-        if SESSION.query(hits).filter(hits.hit == str(hit)).one():
-            return True
+        hit = SESSION.query(hits).filter(hits.hit == str(hit)).one()
+        if hit:
+            return hit
     except:
         return False
     finally:
