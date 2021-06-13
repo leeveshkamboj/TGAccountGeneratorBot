@@ -1,4 +1,4 @@
-from sqlalchemy import Column, String
+from sqlalchemy import Column, String, Integer
 from stdplugins.sql_helpers import SESSION, BASE
 
 
