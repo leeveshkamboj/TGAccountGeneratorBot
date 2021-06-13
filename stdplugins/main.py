@@ -299,10 +299,11 @@ async def reset():
 
 
 @borg.on(events.callbackquery.CallbackQuery(data=re.compile(b"report_(.*)")))
+
 async def genAcc(event):
     hitID = event.data_match.group(1).decode("UTF-8")
     hit = get_hit_by_id(hitID)
-    email, pwd = hit.hit.split(":", maxsplit = 2)
+    email, pwd = hit.hit.split(":", maxsplit = 1)
     entity = await borg.get_entity(event.chat_id)
     username = entity.username
     if username:
