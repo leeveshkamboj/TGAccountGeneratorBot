@@ -29,7 +29,6 @@ reportMsg = """**New Report**
 **Hit Details:-**
 
 ID => `{hitID}`
-Account => `{account}`
 Email => `{email}`
 Password => `{pwd}`
 Combo=> `{combo}`
@@ -259,7 +258,6 @@ async def genAcc(event):
         username = "@" + username
     msg = reportMsg.format(
         hitID = hitID,
-        account = hit.acc,
         email = email,
         pwd = pwd,
         combo = hit.hit,
