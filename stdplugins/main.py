@@ -5,7 +5,7 @@ import schedule
 import os
 import random
 from stdplugins.sql_helpers.users_sql import get_user, add_user, get_all_users, updateLimit, resetDailyLimit, exceededLimitUsers
-from stdplugins.sql_helpers.hits_sql import hitExists, addHit, remHit, get_all_hits
+from stdplugins.sql_helpers.hits_sql import hitExists, addHit, remHit, get_all_hits, get_hit_by_id
 import io
 import requests
 
@@ -14,6 +14,7 @@ channelId = -1001313593468
 channelName = "@NordVpn_1"
 # hitChannelId = -1001296437520
 hitChannelId = 0
+repotGroupID = -1001206527793
 ownerIDs = [630654925, 1111214141]
 maintenanceMode = True
 dailyLimit = 3
@@ -76,7 +77,8 @@ async def my_event_handler(event):
 
 𝙏𝙝𝙖𝙣𝙠 𝙮𝙤𝙪 𝙛𝙤𝙧 𝙪𝙨𝙞𝙣𝙜 𝙢𝙚!
 ❤️𝙎𝙝𝙖𝙧𝙚 & 𝙎𝙪𝙥𝙥𝙤𝙧𝙩 **@nordvpn_1**❤️"""
-                await borg.send_message(event.chat_id, msg)
+                button = [(Button.inline("Report not working", data=f"report_{hitID}"))]
+                await borg.send_message(event.chat_id, msg, buttons = button)
             else:
                 await borg.send_message(event.chat_id, "No account available right now.")
         if '/start' == event.raw_text.lower():
@@ -223,11 +225,34 @@ Do /gen to generate an account
         await borg.send_message(event.chat_id, joinMsg)
 
 
-@borg.on(events)
-async def my_event_handler(event):
-    if event.chat_id == -1001194635704:
-        print(event, "\n\n\n")
 
+
+@borg.on(events.callbackquery.CallbackQuery(data=re.compile(b"report_(.*)")))
+async def genAcc(event):
+    hitID = event.data_match.group(1).decode("UTF-8")
+    hit = get_hit_by_id(hitID)
+    email, pwd = hit.hit.split(":", maxsplit = 2)
+    entity = await borg.get_entity(event.chat_id)
+    username = entity.username
+    if username:
+        username = "@" + username
+    msg = reportMsg.format(
+        hitID = hitID,
+        account = hit.acc,
+        email = email,
+        pwd = pwd,
+        combo = hit.hit,
+        userID = event.chat_id,
+        first_name = entity.first_name,
+        last_name = entity.last_name,
+        username = username
+    )
+    button = [(Button.inline("Remove Now.", data=f"remove_{hitID}"))]
+    if repotGroupID:
+        await borg.send_message(repotGroupID, msg, buttons=button)
+    else:
+        await borg.send_message(ownerIDs[0], msg, buttons=button)
+    await event.answer("Report Sent to Admins!", alert=True)
 
 @borg.on(events.NewMessage)
 async def my_event_handler(event):

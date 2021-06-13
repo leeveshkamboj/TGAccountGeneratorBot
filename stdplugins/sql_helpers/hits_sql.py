@@ -4,7 +4,8 @@ from stdplugins.sql_helpers import SESSION, BASE
 
 class hits(BASE):
     __tablename__ = "hits"
-    hit = Column(String(200), primary_key=True)
+    hitID = Column(Integer(), primary_key=True, autoincrement=True)
+    hit = Column(String(200))
 
     def __init__(self, hit):
         self.hit = hit
@@ -23,7 +24,7 @@ def hitExists(hit):
         SESSION.close()
 
 def addHit(hit):
-    adder = hits(str(hit))
+    adder = hits(hit = str(hit))
     SESSION.add(adder)
     SESSION.commit()
 
@@ -39,3 +40,10 @@ def get_all_hits():
     rem = SESSION.query(hits).all()
     SESSION.close()
     return rem
+
+def get_hit_by_id(ID):
+    hit = SESSION.query(hits).filter(hits.hitID == str(ID)).one() 
+    if hit:
+        return hit
+    else:
+        return None
