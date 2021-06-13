@@ -65,7 +65,9 @@ async def my_event_handler(event):
                 updateLimit(event.chat_id)
             accounts = get_all_hits()
             if accounts:
-                hit = genAccount(accounts).hit.split(":")
+                hit = genAccount(accounts)
+                hitID = hit.hitID
+                hit = hit.hit.split(":")
                 msg = f"""𝙃𝙚𝙧𝙚 𝙄𝙨 𝙔𝙤𝙪𝙧 NordVPN 𝘼𝙘𝙘𝙤𝙪𝙣𝙩
 
 𝙀𝙢𝙖𝙞𝙡: `{hit[0]}`
