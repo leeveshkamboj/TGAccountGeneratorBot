@@ -141,7 +141,7 @@ Do /gen to generate an account
                 else:
                     msg = "**Users:-**\n\n"
                     for user in userList:
-                        msg += (f'{user.userId}\n')
+                        msg += (f'ID - {user.userId}, Daily limit - {user.dailylimit}/{dailyLimit}\n')
                     msg += f'\n**Total {len(userList)} user.**'
                 if len(msg) > 4096:
                     with io.BytesIO(str.encode(msg)) as out_file:
