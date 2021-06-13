@@ -157,12 +157,25 @@ Do /gen to generate an account
                 else:
                     await borg.send_message(event.chat_id, msg)
                     return
-            if '/addhit' == event.raw_text.lower()[0:7]:
-                hits = event.raw_text.lower()[8:].split("\n")
-                for hit in hits:
-                    if not hitExists(hit):
-                        addHit(hit)
-                await borg.send_message(event.chat_id, f"{len(hits)} Hit(s) added.")
+            if '/addhit' == event.raw_text.lower():
+                async with borg.conversation(event.chat_id) as conv:
+                    await conv.send_message('Send hits you want to add.')
+                    try:
+                        response = await conv.get_response()
+                    except:
+                        return
+                    if response.text[0] == "/":
+                        return
+                    hits = response.text.split("\n")
+                    count = 0
+                    for hit in hits:
+                        hit=hit.strip()
+                        hit = hit.split(" ")[0]
+                        if ":" in hit:
+                            if not hitExists(hit):
+                                addHit(hit)
+                                count += 1
+                    await conv.send_message(f"{count} Hit(s) added.")
             if '/cleanhits' == event.raw_text.lower():
                 hitList = get_all_hits()
                 for hit in hitList:
