@@ -92,7 +92,10 @@ async def my_event_handler(event):
 
 𝙏𝙝𝙖𝙣𝙠 𝙮𝙤𝙪 𝙛𝙤𝙧 𝙪𝙨𝙞𝙣𝙜 𝙢𝙚!
 ❤️𝙎𝙝𝙖𝙧𝙚 & 𝙎𝙪𝙥𝙥𝙤𝙧𝙩 **@nordvpn_1**❤️"""
-                button = [[Button.url("Authentication error?", "https://bit.ly/35gd38D")], [(Button.inline("Report not working", data=f"report_{hitID}"))]]
+                button = [
+                    [Button.url("Authentication error?", "https://bit.ly/35gd38D")],
+                    [(Button.inline("Report not working", data=f"report_{hitID}"))]
+                ]
                 await borg.send_message(event.chat_id, msg, buttons = button)
             else:
                 await borg.send_message(event.chat_id, "No account available right now.")
@@ -188,9 +191,10 @@ Do /gen to generate an account
                     hits = response.text.split("\n")
                     count = 0
                     for hit in hits:
-                        hit=hit.strip()
+                        hit = hit.strip()
                         hit = hit.split(" ")[0]
                         if ":" in hit:
+                            print(hit)
                             hitID = hitExists(hit).hitID
                             if hitID:
                                 remHit(hitID)
