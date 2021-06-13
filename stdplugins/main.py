@@ -328,9 +328,10 @@ async def genAcc(event):
         if get_hit_by_id(hitID):
             remHit(hitID)
             await event.answer("Removed.", alert=True)
+            await event.delete()
         else:
             await event.answer("Hits already removed.", alert=True)
-        
+            await event.delete()
     except Exception as e:
         if repotGroupID:
             await borg.send_message(repotGroupID, f"Error - {e}")
