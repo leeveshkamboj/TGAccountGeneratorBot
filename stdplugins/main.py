@@ -92,7 +92,7 @@ async def my_event_handler(event):
 
 𝙏𝙝𝙖𝙣𝙠 𝙮𝙤𝙪 𝙛𝙤𝙧 𝙪𝙨𝙞𝙣𝙜 𝙢𝙚!
 ❤️𝙎𝙝𝙖𝙧𝙚 & 𝙎𝙪𝙥𝙥𝙤𝙧𝙩 **@nordvpn_1**❤️"""
-                button = [(Button.inline("Report not working", data=f"report_{hitID}"))]
+                button = [[Button.url("Authentication error?", "https://bit.ly/35gd38D")], [(Button.inline("Report not working", data=f"report_{hitID}"))]]
                 await borg.send_message(event.chat_id, msg, buttons = button)
             else:
                 await borg.send_message(event.chat_id, "No account available right now.")
@@ -245,17 +245,20 @@ Do /gen to generate an account
                     if len(userList) == 0:
                         msg = "No user found"
                     else:
-                        await borg.send_message(event.chat_id, f"Sending to {len(userList)} users.")
+                        bMsg = await borg.send_message(event.chat_id, f"Sending to {len(userList)} users.")
                         err = 0 
                         succ = 0
+                        errs = ""
                         for user in userList:
                             try:
                                 await borg.send_message(int(user.userId), msg)
                                 succ += 1
                             except Exception as e:
                                 err += 1
-                                print(e)
-                        await borg.send_message(event.chat_id, f"Successfully sent to {succ} users with {err} errors.")
+                                errs += f"Userid - {user.userId} Error - {e}\n"
+                            percents = round(100.0 * count / float(len(list_of_stickers)), 1)
+                            await borg.edit_message(event.chat_id, bMsg.id, f"Sending... [{percents}%]\n{err} error(s) till now.")
+                        await borg.edit_message(event.chat_id, bMsg.id, f"Successfully sent to {succ} users with {err} errors.")
                 except Exception as error:
                     await borg.send_message(event.chat_id, "Reply to a text msg")
                     print(error)
@@ -306,6 +309,7 @@ async def genAcc(event):
     else:
         await borg.send_message(ownerIDs[0], msg, buttons=button)
     await event.answer("Report Sent to Admins!", alert=True)
+    await event.delete()
 
 
 @borg.on(events.callbackquery.CallbackQuery(data=re.compile(b"remove_(.*)")))
