@@ -279,7 +279,7 @@ async def genAcc(event):
 async def genAcc(event):
     hitID = event.data_match.group(1).decode("UTF-8")
     try:
-        if hitExistsByID(hitID):
+        if get_hit_by_id(hitID):
             remHit(hitID)
             await event.answer("Removed.", alert=True)
         else:
