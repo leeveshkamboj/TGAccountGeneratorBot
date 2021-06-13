@@ -41,8 +41,8 @@ class Uniborg(TelegramClient):
 
         self.loop.run_until_complete(self._async_init(bot_token=bot_token))
 
-        core_plugin = Path(__file__).parent / "_core.py"
-        self.load_plugin_from_file(core_plugin)
+        # core_plugin = Path(__file__).parent / "_core.py"
+        # self.load_plugin_from_file(core_plugin)
 
         for p in Path().glob(f"{self._plugin_path}/*.py"):
             self.load_plugin_from_file(p)
