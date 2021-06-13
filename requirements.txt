@@ -1,5 +1,5 @@
 telethon
 sqlalchemy
 psycopg2
-schedule
 requests
+apscheduler

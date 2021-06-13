@@ -1,13 +1,15 @@
 ﻿from telethon import events, Button
 from uniborg.util import admin_cmd
 import time
-import schedule
 import os
 import random
 from stdplugins.sql_helpers.users_sql import get_user, add_user, get_all_users, updateLimit, resetDailyLimit, exceededLimitUsers
 from stdplugins.sql_helpers.hits_sql import hitExists, addHit, remHit, get_all_hits, get_hit_by_id
 import io
 import requests
+from apscheduler.schedulers.asyncio import AsyncIOScheduler
+
+
 
 
 channelId = -1001313593468
@@ -16,21 +18,11 @@ channelName = "@NordVpn_1"
 hitChannelId = 0
 repotGroupID = -1001206527793
 ownerIDs = [630654925, 1111214141]
-maintenanceMode = True
+maintenanceMode = False
 dailyLimit = 3
 botToken = "1202514912:AAE2yMJiiRTbP2nXYhp2ksHPjJYe5GlVCxo"
 
 
-
-
-
-def reset():
-    msg = "Bot reseted."
-    url = f"https://api.telegram.org/bot{botToken}/sendMessage?chat_id={ownerIDs[0]}&text={msg}"
-    resetDailyLimit()
-    requests.get(url)
-    print('Daily limit reset.')
-    return
 
 
 
@@ -45,7 +37,11 @@ async def my_event_handler(event):
             add_user(event.chat_id)
     except:
         pass
-    joinMsg = f"Please Join {channelName} to use this bot."
+    joinMsg = f"""Hello Dear ❤️
+
+[+] For Using This Bot You must Join Channel {channelName}
+[+] If u Left The Channel, Bot won't Work 😒
+[+] After Joining Channel, Come Back To Bot And Click On /start"""
     try:
         perm = await borg.get_permissions(channelId, event.chat_id)
     except:
@@ -157,14 +153,7 @@ Do /gen to generate an account
                         pass
                 await borg.send_message(event.chat_id, "Cleaned...")
             if '/reset' == event.raw_text.lower():
-                msg = "Limit Has Been Reset , You can Generate Your Accounts Now Now !"
-                users = exceededLimitUsers(dailyLimit)
-                for user in users:
-                    try:
-                        await borg.send_message(int(user.userId), msg)
-                    except Exception as e:
-                        print(e)
-                reset() 
+                await reset() 
                 await borg.send_message(event.chat_id, "Done")   
             if '/search' == event.raw_text.lower()[0:7]:
                 try:
@@ -224,6 +213,18 @@ Do /gen to generate an account
     else:
         await borg.send_message(event.chat_id, joinMsg)
 
+async def reset():
+    msg = "Limit Has Been Reset , You can Generate Your Accounts Now Now !"
+    users = exceededLimitUsers(dailyLimit)
+    for user in users:
+        try:
+            await borg.send_message(int(user.userId), msg)
+        except Exception as e:
+            print(e)
+    msg = "Bot reseted."
+    url = f"https://api.telegram.org/bot{botToken}/sendMessage?chat_id={ownerIDs[0]}&text={msg}"
+    resetDailyLimit()
+    requests.get(url)
 
 
 
@@ -267,8 +268,7 @@ async def my_event_handler(event):
 
 
 
-schedule.every().day.at("00:00").do(reset)
 
-# while True:
-#     schedule.run_pending()
-#     time.sleep(50) 
+scheduler = AsyncIOScheduler(timezone="Asia/Kolkata")
+scheduler.add_job(reset, 'cron', hour=0)
+scheduler.start()
