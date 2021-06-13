@@ -42,8 +42,11 @@ def get_all_hits():
     return rem
 
 def get_hit_by_id(ID):
-    hit = SESSION.query(hits).filter(hits.hitID == str(ID)).one() 
-    if hit:
-        return hit
-    else:
+    try:
+        hit = SESSION.query(hits).filter(hits.hitID == str(ID)).one() 
+        if hit:
+            return hit
+        else:
+            return None
+    except:
         return None
