@@ -19,7 +19,7 @@ channelName = "@NordVpn_1"
 hitChannelId = 0
 repotGroupID = -1001206527793
 ownerIDs = [630654925, 1111214141]
-maintenanceMode = True
+maintenanceMode = False
 dailyLimit = 3
 botToken = "1202514912:AAE2yMJiiRTbP2nXYhp2ksHPjJYe5GlVCxo"
 
@@ -157,7 +157,7 @@ Do /gen to generate an account
                 else:
                     await borg.send_message(event.chat_id, msg)
                     return
-            if '/addhit' == event.raw_text.lower():
+            if '/addhits' == event.raw_text.lower():
                 async with borg.conversation(event.chat_id) as conv:
                     await conv.send_message('Send hits you want to add.')
                     try:
