@@ -74,10 +74,11 @@ async def my_event_handler(event):
             if not user:
                 add_user(event.chat_id)
             else:
-                if int(user.dailylimit) >= dailyLimit:
+                if int(user.dailylimit) >= dailyLimit and event.chat_id not in ownerIDs:
                     await borg.send_message(event.chat_id, "Daily limit exceeded.")
                     return
-                updateLimit(event.chat_id)
+                else:
+                    updateLimit(event.chat_id)
             accounts = get_all_hits()
             if accounts:
                 hit = genAccount(accounts)
