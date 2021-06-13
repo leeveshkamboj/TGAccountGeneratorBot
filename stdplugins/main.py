@@ -318,7 +318,7 @@ async def genAcc(event):
     else:
         await borg.send_message(ownerIDs[0], msg, buttons=button)
     await event.answer("Report Sent to Admins!", alert=True)
-    await event.delete()
+    # await event.delete()
 
 
 @borg.on(events.callbackquery.CallbackQuery(data=re.compile(b"remove_(.*)")))
