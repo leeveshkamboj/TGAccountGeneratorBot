@@ -274,6 +274,26 @@ async def genAcc(event):
         await borg.send_message(ownerIDs[0], msg, buttons=button)
     await event.answer("Report Sent to Admins!", alert=True)
 
+
+@borg.on(events.callbackquery.CallbackQuery(data=re.compile(b"remove_(.*)")))
+async def genAcc(event):
+    hitID = event.data_match.group(1).decode("UTF-8")
+    try:
+        if hitExistsByID(hitID):
+            remHit(hitID)
+            await event.answer("Removed.", alert=True)
+        else:
+            await event.answer("Hits already removed.", alert=True)
+        
+    except Exception as e:
+        if groupId:
+            await borg.send_message(repotGroupID, f"Error - {e}")
+        else:
+            await borg.send_message(ownerIDs[0], f"Error - {e}")
+
+
+
+
 @borg.on(events.NewMessage)
 async def my_event_handler(event):
     if hitChannelId and event.chat_id == hitChannelId:
