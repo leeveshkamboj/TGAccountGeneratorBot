@@ -257,6 +257,7 @@ Do /gen to generate an account
                         bMsg = await borg.send_message(event.chat_id, f"Sending to {len(userList)} users.")
                         err = 0 
                         succ = 0
+                        count = 0
                         errs = ""
                         for user in userList:
                             try:
@@ -265,7 +266,8 @@ Do /gen to generate an account
                             except Exception as e:
                                 err += 1
                                 errs += f"Userid - {user.userId} Error - {e}\n"
-                            percents = round(100.0 * count / float(len(list_of_stickers)), 1)
+                            count += 1
+                            percents = round(100.0 * count / float(len(userList)), 1)
                             await borg.edit_message(event.chat_id, bMsg.id, f"Sending... [{percents}%]\n{err} error(s) till now.")
                         await borg.edit_message(event.chat_id, bMsg.id, f"Successfully sent to {succ} users with {err} errors.")
                 except Exception as error:
