@@ -18,7 +18,6 @@ channelId = -1001313593468
 channelName = "@NordVpn_1"
 # hitChannelId = -1001296437520
 hitChannelId = 0
-repotGroupID = -100120652779
 dailyLimit = 3
 botToken = "1202514912:AAE2yMJiiRTbP2nXYhp2ksHPjJYe5GlVCxo"
 
@@ -331,8 +330,8 @@ async def genAcc(event):
             [(Button.inline("Remove Now", data=f"remove_{hitID}"))],
             [(Button.inline("Ignore", data="ignore"))]
         ]
-        if repotGroupID:
-            await borg.send_message(repotGroupID, msg, buttons=button)
+        if Var.repotgroupId:
+            await borg.send_message(Var.repotgroupId, msg, buttons=button)
         else:
             await borg.send_message(Var.ownerIDs[0], msg, buttons=button)
     # except:
@@ -354,8 +353,8 @@ async def genAcc(event):
             await event.answer("Hits already removed.", alert=True)
             await event.delete()
     except Exception as e:
-        if repotGroupID:
-            await borg.send_message(repotGroupID, f"Error - {e}")
+        if Var.repotgroupId:
+            await borg.send_message(Var.repotgroupId, f"Error - {e}")
         else:
             await borg.send_message(Var.ownerIDs[0], f"Error - {e}")
 
