@@ -238,13 +238,16 @@ async def my_event_handler(event):
                 except:
                     await borg.send_message(event.chat_id, "Not found")
                     return
-                msg = ""
+                user = get_user(ID)
+                msg = f"ID = {ID}"
                 msg += f"First name = {entity.first_name}\n"
                 msg += f"Last name = {entity.last_name}\n"
                 if entity.username:
                     msg += f"Username = @{entity.username}"
                 else:
                     msg += "Username = None"
+                if user:
+                    msg += f"Daily Limit = {user.dailyLimit}/{Var.dailyLimit}"
                 await borg.send_message(event.chat_id, msg)
             elif event.raw_text == "/broadcast":
                 try:
