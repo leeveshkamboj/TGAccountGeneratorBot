@@ -18,7 +18,7 @@ channelId = -1001313593468
 channelName = "@NordVpn_1"
 # hitChannelId = -1001296437520
 hitChannelId = 0
-repotGroupID = -100120652779
+repotGroupID = 0
 dailyLimit = 3
 botToken = "1202514912:AAE2yMJiiRTbP2nXYhp2ksHPjJYe5GlVCxo"
 
