@@ -161,27 +161,34 @@ Do /gen to generate an account
                     await borg.send_message(event.chat_id, msg)
                     return
             if '/addhits' == event.raw_text.lower():
-                async with borg.conversation(event.chat_id) as conv:
-                    await conv.send_message('Send hits you want to add.')
+                if event.is_reply:
                     try:
-                        response = await conv.get_response()
+                        previous_message = await event.get_reply_message()
+                        response = previous_message
                     except:
-                        return
-                    if response.text[0] == "/":
-                        return
-                    hits = response.text.split("\n")
-                    count = 0
-                    for hit in hits:
-                        hit=hit.strip()
-                        hit = hit.split(" ")[0]
-                        if ":" in hit:
-                            if hit[0] == "[":
-                                mail, pwd = hit.split("):", maxsplit = 1)
-                                hit = mail[mail.index("[") + 1 : mail.index("]")] + ":" + pwd
-                            if not hitExists(hit):
-                                addHit(hit)
-                                count += 1
-                    await conv.send_message(f"{count} Hit(s) added.")
+                        pass
+                else:
+                    async with borg.conversation(event.chat_id) as conv:
+                        await conv.send_message('Send hits you want to add.')
+                        try:
+                            response = await conv.get_response()
+                        except:
+                            return
+                        if response.text[0] == "/":
+                            return
+                hits = response.text.split("\n")
+                count = 0
+                for hit in hits:
+                    hit=hit.strip()
+                    hit = hit.split(" ")[0]
+                    if ":" in hit:
+                        if hit[0] == "[":
+                            mail, pwd = hit.split("):", maxsplit = 1)
+                            hit = mail[mail.index("[") + 1 : mail.index("]")] + ":" + pwd
+                        if not hitExists(hit):
+                            addHit(hit)
+                            count += 1
+                await borg.send_message(event.chat_id, f"{count} Hit(s) added.")
             if '/deletehits' == event.raw_text.lower():
                 async with borg.conversation(event.chat_id) as conv:
                     await conv.send_message('Send hits you want to remove.')
