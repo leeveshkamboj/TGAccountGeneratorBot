@@ -305,9 +305,9 @@ async def reset(resetMsg = None):
             pass
         count += 1
         if resetMsg:
-            percents = round(100.0 * count / float(len(user)), 1)
+            percents = round(100.0 * count / float(len(users)), 1)
             try:
-                await borg.edit_message(resetMsg.chat_id, resetMsg.id, f"Sending... [{percents}%]\n{err} error(s) till now.")
+                await borg.edit_message(resetMsg.chat_id, resetMsg.id, f"Sending... [{percents}%]")
             except:
                 pass
     resetDailyLimit()
