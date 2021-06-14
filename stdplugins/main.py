@@ -247,7 +247,7 @@ async def my_event_handler(event):
                 else:
                     msg += "Username = None"
                 if user:
-                    msg += f"Daily Limit = {user.dailyLimit}/{Var.dailyLimit}"
+                    msg += f"Daily Limit = {user.dailylimit}/{Var.dailyLimit}"
                 await borg.send_message(event.chat_id, msg)
             elif event.raw_text == "/broadcast":
                 try:
