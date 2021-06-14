@@ -239,13 +239,13 @@ async def my_event_handler(event):
                     await borg.send_message(event.chat_id, "Not found")
                     return
                 user = get_user(ID)
-                msg = f"ID = {ID}"
+                msg = f"ID = {ID}\n"
                 msg += f"First name = {entity.first_name}\n"
                 msg += f"Last name = {entity.last_name}\n"
                 if entity.username:
-                    msg += f"Username = @{entity.username}"
+                    msg += f"Username = @{entity.username}\n"
                 else:
-                    msg += "Username = None"
+                    msg += "Username = None\n"
                 if user:
                     msg += f"Daily Limit = {user.dailylimit}/{Var.dailyLimit}"
                 await borg.send_message(event.chat_id, msg)
