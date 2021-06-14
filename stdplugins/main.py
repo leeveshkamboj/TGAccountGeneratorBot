@@ -13,14 +13,26 @@ from apscheduler.schedulers.asyncio import AsyncIOScheduler
 
 
 
+####################################################################
 
-channelId = -1001313593468
-channelName = "@NordVpn_1"
-# hitChannelId = -1001296437520
-hitChannelId = 0
-dailyLimit = 3
-botToken = "1202514912:AAE2yMJiiRTbP2nXYhp2ksHPjJYe5GlVCxo"
+joinMsg = """Hello Dear ❤️
 
+[+] For Using This Bot You must Join Channel {channelName}
+[+] If u Left The Channel, Bot won't Work 😒
+[+] After Joining Channel, Come Back To Bot And Click On /start"""
+
+
+genMsg = """𝙃𝙚𝙧𝙚 𝙄𝙨 𝙔𝙤𝙪𝙧 NordVPN 𝘼𝙘𝙘𝙤𝙪𝙣𝙩
+
+𝙀𝙢𝙖𝙞𝙡: `{email}`
+𝙋𝙖𝙨𝙨: `{pwd}`
+𝙂𝙚𝙣𝙚𝙧𝙖𝙩𝙚𝙙 𝘽𝙮: **{name}**
+
+𝙏𝙝𝙖𝙣𝙠 𝙮𝙤𝙪 𝙛𝙤𝙧 𝙪𝙨𝙞𝙣𝙜 𝙢𝙚!
+❤️𝙎𝙝𝙖𝙧𝙚 & 𝙎𝙪𝙥𝙥𝙤𝙧𝙩 **@nordvpn_1**❤️"""
+
+
+####################################################################
 
 reportMsg = """**New Report**
 
@@ -39,6 +51,18 @@ Last Name => `{last_name}`
 Username => {username}
 """
 
+####################################################################
+
+msg = """**Hi {name},
+I am an Account Generator Bot
+-------------------------------------------------
+I can provide premium accounts of different services
+--------------------------------------------------
+Do /gen to generate an account
+--------------------------------------------------
+❤️Brought to You By @PandaZnetwork || Made by @HeisenbergTheDanger❤️**"""
+
+####################################################################
 
 def genAccount(_list):
     return _list[random.randint(0, len(_list) - 1)]
@@ -47,19 +71,14 @@ def genAccount(_list):
 @borg.on(events.NewMessage(func=lambda e: e.is_private))
 async def my_event_handler(event):
     try:
-        if not get_user(event.chat_id) and (event.chat_id != channelId or event.chat_id != hitChannelId):
+        if not get_user(event.chat_id) and (event.chat_id != Var.channelId or event.chat_id != Var.hitChannelId):
             add_user(event.chat_id)
     except:
         pass
-    joinMsg = f"""Hello Dear ❤️
-
-[+] For Using This Bot You must Join Channel {channelName}
-[+] If u Left The Channel, Bot won't Work 😒
-[+] After Joining Channel, Come Back To Bot And Click On /start"""
     try:
-        perm = await borg.get_permissions(channelId, event.chat_id)
+        perm = await borg.get_permissions(Var.channelId, event.chat_id)
     except:
-        await borg.send_message(event.chat_id, joinMsg)
+        await borg.send_message(event.chat_id, joinMsg.format(channelName = Var.channelName))
         return
     if perm.has_default_permissions or perm.is_admin:
         entity = await borg.get_entity(event.chat_id)
@@ -72,41 +91,26 @@ async def my_event_handler(event):
             if not user:
                 add_user(event.chat_id)
             else:
-                if int(user.dailylimit) >= dailyLimit and event.chat_id not in Var.ownerIDs:
+                if int(user.dailylimit) >= Var.dailyLimit and event.chat_id not in Var.ownerIDs:
                     await borg.send_message(event.chat_id, "Daily limit exceeded.")
                     return
-                elif int(user.dailylimit) != dailyLimit:
+                elif int(user.dailylimit) != Var.dailyLimit:
                     updateLimit(event.chat_id)
             accounts = get_all_hits()
             if accounts:
                 hit = genAccount(accounts)
                 hitID = hit.hitID
                 hit = hit.hit.split(":")
-                msg = f"""𝙃𝙚𝙧𝙚 𝙄𝙨 𝙔𝙤𝙪𝙧 NordVPN 𝘼𝙘𝙘𝙤𝙪𝙣𝙩
-
-𝙀𝙢𝙖𝙞𝙡: `{hit[0]}`
-𝙋𝙖𝙨𝙨: `{hit[1]}`
-𝙂𝙚𝙣𝙚𝙧𝙖𝙩𝙚𝙙 𝘽𝙮: **{first_name}**
-
-𝙏𝙝𝙖𝙣𝙠 𝙮𝙤𝙪 𝙛𝙤𝙧 𝙪𝙨𝙞𝙣𝙜 𝙢𝙚!
-❤️𝙎𝙝𝙖𝙧𝙚 & 𝙎𝙪𝙥𝙥𝙤𝙧𝙩 **@nordvpn_1**❤️"""
+                
                 button = [
                     [Button.url("Authentication error?", "https://bit.ly/35gd38D")],
                     [(Button.inline("Report not working", data=f"report_{hitID}"))]
                 ]
-                await borg.send_message(event.chat_id, msg, buttons = button)
+                await borg.send_message(event.chat_id, genMsg.format(email = hit[0], pwd = hit[1], name = first_name), buttons = button)
             else:
                 await borg.send_message(event.chat_id, "No account available right now.")
         if '/start' == event.raw_text.lower():
-            msg = f"""**Hi {first_name},
-I am an Account Generator Bot
--------------------------------------------------
-I can provide premium accounts of different services
---------------------------------------------------
-Do /gen to generate an account
---------------------------------------------------
-❤️Brought to You By @PandaZnetwork || Made by @HeisenbergTheDanger❤️**"""
-            await borg.send_message(event.chat_id, msg)
+            await borg.send_message(event.chat_id, startMsg.format(name = first_name))
             return
         if event.chat_id in Var.ownerIDs:
             if '/count' == event.raw_text.lower():
@@ -142,7 +146,7 @@ Do /gen to generate an account
                 else:
                     msg = "**Users:-**\n\n"
                     for user in userList:
-                        msg += (f'ID - {user.userId}, Daily limit - {user.dailylimit}/{dailyLimit}\n')
+                        msg += (f'ID - {user.userId}, Daily limit - {user.dailylimit}/{Var.dailyLimit}\n')
                     msg += f'\n**Total {len(userList)} user.**'
                 if len(msg) > 4096:
                     with io.BytesIO(str.encode(msg)) as out_file:
@@ -286,30 +290,26 @@ Do /gen to generate an account
             await event.reply('yo')
             return
     else:
-        await borg.send_message(event.chat_id, joinMsg)
+        await borg.send_message(event.chat_id, joinMsg.format(channelName = Var.channelName))
 
 async def reset():
     msg = "Limit Has Been Reset , You can Generate Your Accounts Now !"
-    users = exceededLimitUsers(dailyLimit)
+    users = exceededLimitUsers(Var.dailyLimit)
     for user in users:
         try:
             await borg.send_message(int(user.userId), msg)
         except Exception as e:
             # print(e)
             pass
-    msg = "Bot reseted."
-    url = f"https://api.telegram.org/bot{botToken}/sendMessage?chat_id={Var.ownerIDs[0]}&text={msg}"
     resetDailyLimit()
-    requests.get(url)
-
+    
 
 
 
 @borg.on(events.callbackquery.CallbackQuery(data=re.compile(b"report_(.*)")))
 async def genAcc(event):
     hitID = event.data_match.group(1).decode("UTF-8")
-    # try:
-    if True:
+    try:
         hit = get_hit_by_id(hitID)
         email, pwd = hit.hit.split(":", maxsplit = 1)
         entity = await borg.get_entity(event.chat_id)
@@ -334,8 +334,8 @@ async def genAcc(event):
             await borg.send_message(Var.repotGroupId, msg, buttons=button)
         else:
             await borg.send_message(Var.ownerIDs[0], msg, buttons=button)
-    # except:
-    #     pass
+    except:
+        pass
     await event.answer("Report Sent to Admins!", alert=True)
     newButton = [Button.url("Authentication error?", "https://bit.ly/35gd38D")]
     await borg.edit_message(event.chat_id, event.query.msg_id, buttons = newButton)
@@ -368,7 +368,7 @@ async def genAcc(event):
 
 @borg.on(events.NewMessage)
 async def my_event_handler(event):
-    if hitChannelId and event.chat_id == hitChannelId:
+    if Var.hitChannelId and event.chat_id == Var.hitChannelId:
         lines = event.raw_text.split("\n")
         if lines[0] == "NordVPN":
             hit = lines[3].split(": ")[1].strip() + ":" + lines[4].split(": ")[1].strip()
