@@ -330,8 +330,8 @@ async def genAcc(event):
             [(Button.inline("Remove Now", data=f"remove_{hitID}"))],
             [(Button.inline("Ignore", data="ignore"))]
         ]
-        if Var.repotgroupId:
-            await borg.send_message(Var.repotgroupId, msg, buttons=button)
+        if Var.repotGroupId:
+            await borg.send_message(Var.repotGroupId, msg, buttons=button)
         else:
             await borg.send_message(Var.ownerIDs[0], msg, buttons=button)
     # except:
@@ -353,8 +353,8 @@ async def genAcc(event):
             await event.answer("Hits already removed.", alert=True)
             await event.delete()
     except Exception as e:
-        if Var.repotgroupId:
-            await borg.send_message(Var.repotgroupId, f"Error - {e}")
+        if Var.repotGroupId:
+            await borg.send_message(Var.repotGroupId, f"Error - {e}")
         else:
             await borg.send_message(Var.ownerIDs[0], f"Error - {e}")
 
