@@ -224,7 +224,8 @@ async def my_event_handler(event):
                         pass
                 await borg.send_message(event.chat_id, "Cleaned...")
             if '/reset' == event.raw_text.lower():
-                await reset() 
+                resetMsg = await borg.send_message(event.chat_id, "Resetting...")
+                await reset(resetMsg) 
                 await borg.send_message(event.chat_id, "Done")   
             if '/search' == event.raw_text.lower()[0:7]:
                 try:
@@ -292,15 +293,23 @@ async def my_event_handler(event):
     else:
         await borg.send_message(event.chat_id, joinMsg.format(channelName = Var.channelName))
 
-async def reset():
+async def reset(resetMsg = None):
     msg = "Limit Has Been Reset , You can Generate Your Accounts Now !"
     users = exceededLimitUsers(Var.dailyLimit)
+    count = 0
     for user in users:
         try:
             await borg.send_message(int(user.userId), msg)
         except Exception as e:
             # print(e)
             pass
+        count += 1
+        if resetMsg:
+            percents = round(100.0 * count / float(len(userList)), 1)
+            try:
+                await borg.edit_message(resetMsg.chat_id, resetMsg.id, f"Sending... [{percents}%]\n{err} error(s) till now.")
+            except:
+                pass
     resetDailyLimit()
     
 
