@@ -119,7 +119,7 @@ Do /gen to generate an account
                 if len(hitList) == 0:
                     msg = "Database is empty."
                 else:
-                    msg = "**Hits:-**\n\n"
+                    msg = "**Hits-**\n\n"
                     for hit in hitList:
                         msg += (f'{hit.hit}\n')
                     msg += f'\n**Total {len(hitList)} hits.**'
@@ -176,7 +176,7 @@ Do /gen to generate an account
                             return
                         if response.text[0] == "/":
                             return
-                hits = response.text.split("\n")
+                hits = response.raw_text.split("\n")
                 count = 0
                 for hit in hits:
                     hit=hit.strip()
@@ -198,7 +198,7 @@ Do /gen to generate an account
                         return
                     if response.text[0] == "/":
                         return
-                    hits = response.text.split("\n")
+                    hits = response.raw_text.split("\n")
                     count = 0
                     for hit in hits:
                         hit = hit.strip()
