@@ -282,7 +282,7 @@ Do /gen to generate an account
                         await borg.edit_message(event.chat_id, bMsg.id, f"Successfully sent to {succ} users with {err} errors.")
                 except Exception as error:
                     await borg.send_message(event.chat_id, "Reply to a text msg")
-                    print(error)
+                    # print(error)
         if 'yo' == event.raw_text.lower():
             await event.reply('yo')
             return
@@ -309,7 +309,8 @@ async def reset():
 @borg.on(events.callbackquery.CallbackQuery(data=re.compile(b"report_(.*)")))
 async def genAcc(event):
     hitID = event.data_match.group(1).decode("UTF-8")
-    try:
+    # try:
+    if True:
         hit = get_hit_by_id(hitID)
         email, pwd = hit.hit.split(":", maxsplit = 1)
         entity = await borg.get_entity(event.chat_id)
@@ -334,8 +335,8 @@ async def genAcc(event):
             await borg.send_message(repotGroupID, msg, buttons=button)
         else:
             await borg.send_message(Var.ownerIDs[0], msg, buttons=button)
-    except:
-        pass
+    # except:
+    #     pass
     await event.answer("Report Sent to Admins!", alert=True)
     newButton = [Button.url("Authentication error?", "https://bit.ly/35gd38D")]
     await borg.edit_message(event.chat_id, event.query.msg_id, buttons = newButton)
