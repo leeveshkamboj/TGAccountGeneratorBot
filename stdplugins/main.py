@@ -327,7 +327,7 @@ async def genAcc(event):
         email, pwd = hit.hit.split(":", maxsplit = 1)
         entity = await borg.get_entity(event.chat_id)
         username = entity.username
-        user = get_user(ID)
+        user = get_user(event.chat_id)
         if username:
             username = "@" + username
         msg = reportMsg.format(
