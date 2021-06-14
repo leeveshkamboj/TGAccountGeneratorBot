@@ -339,7 +339,8 @@ async def genAcc(event):
     except:
         pass
     await event.answer("Report Sent to Admins!", alert=True)
-    await event.delete()
+    newButton = [Button.url("Authentication error?", "https://bit.ly/35gd38D")]
+    await borg.edit_message(event.chat_id, event.query.msg_id, buttons = newButton)
 
 
 @borg.on(events.callbackquery.CallbackQuery(data=re.compile(b"remove_(.*)")))
