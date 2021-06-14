@@ -308,7 +308,6 @@ async def reset():
 
 
 @borg.on(events.callbackquery.CallbackQuery(data=re.compile(b"report_(.*)")))
-
 async def genAcc(event):
     hitID = event.data_match.group(1).decode("UTF-8")
     try:
