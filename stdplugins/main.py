@@ -283,13 +283,14 @@ Do /gen to generate an account
         await borg.send_message(event.chat_id, joinMsg)
 
 async def reset():
-    msg = "Limit Has Been Reset , You can Generate Your Accounts Now Now !"
+    msg = "Limit Has Been Reset , You can Generate Your Accounts Now !"
     users = exceededLimitUsers(dailyLimit)
     for user in users:
         try:
             await borg.send_message(int(user.userId), msg)
         except Exception as e:
-            print(e)
+            # print(e)
+            pass
     msg = "Bot reseted."
     url = f"https://api.telegram.org/bot{botToken}/sendMessage?chat_id={ownerIDs[0]}&text={msg}"
     resetDailyLimit()
@@ -302,27 +303,30 @@ async def reset():
 
 async def genAcc(event):
     hitID = event.data_match.group(1).decode("UTF-8")
-    hit = get_hit_by_id(hitID)
-    email, pwd = hit.hit.split(":", maxsplit = 1)
-    entity = await borg.get_entity(event.chat_id)
-    username = entity.username
-    if username:
-        username = "@" + username
-    msg = reportMsg.format(
-        hitID = hitID,
-        email = email,
-        pwd = pwd,
-        combo = hit.hit,
-        userID = event.chat_id,
-        first_name = entity.first_name,
-        last_name = entity.last_name,
-        username = username
-    )
-    button = [(Button.inline("Remove Now.", data=f"remove_{hitID}"))]
-    if repotGroupID:
-        await borg.send_message(repotGroupID, msg, buttons=button)
-    else:
-        await borg.send_message(ownerIDs[0], msg, buttons=button)
+    try:
+        hit = get_hit_by_id(hitID)
+        email, pwd = hit.hit.split(":", maxsplit = 1)
+        entity = await borg.get_entity(event.chat_id)
+        username = entity.username
+        if username:
+            username = "@" + username
+        msg = reportMsg.format(
+            hitID = hitID,
+            email = email,
+            pwd = pwd,
+            combo = hit.hit,
+            userID = event.chat_id,
+            first_name = entity.first_name,
+            last_name = entity.last_name,
+            username = username
+        )
+        button = [(Button.inline("Remove Now.", data=f"remove_{hitID}"))]
+        if repotGroupID:
+            await borg.send_message(repotGroupID, msg, buttons=button)
+        else:
+            await borg.send_message(ownerIDs[0], msg, buttons=button)
+    except:
+        pass
     await event.answer("Report Sent to Admins!", alert=True)
     await event.delete()
 
