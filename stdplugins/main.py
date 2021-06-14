@@ -328,8 +328,8 @@ async def genAcc(event):
             username = username
         )
         button = [
-            [(Button.inline("Remove Now.", data=f"remove_{hitID}"))],
-            [(Button.inline("Ignore", data=f"ignore"))]
+            [(Button.inline("Remove Now", data=f"remove_{hitID}"))],
+            [(Button.inline("Ignore", data="ignore"))]
         ]
         if repotGroupID:
             await borg.send_message(repotGroupID, msg, buttons=button)
