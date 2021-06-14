@@ -53,7 +53,7 @@ Username => {username}
 
 ####################################################################
 
-msg = """**Hi {name},
+startMsg = """**Hi {name},
 I am an Account Generator Bot
 -------------------------------------------------
 I can provide premium accounts of different services
