@@ -304,69 +304,41 @@ async def reset():
 
 
 
+
 @borg.on(events.callbackquery.CallbackQuery(data=re.compile(b"report_(.*)")))
 async def genAcc(event):
     hitID = event.data_match.group(1).decode("UTF-8")
-    hit = get_hit_by_id(hitID)
-    email, pwd = hit.hit.split(":", maxsplit = 1)
-    entity = await borg.get_entity(event.chat_id)
-    username = entity.username
-    if username:
-        username = "@" + username
-    msg = reportMsg.format(
-        hitID = hitID,
-        email = email,
-        pwd = pwd,
-        combo = hit.hit,
-        userID = event.chat_id,
-        first_name = entity.first_name,
-        last_name = entity.last_name,
-        username = username
-    )
-    button = [
-        [(Button.inline("Remove Now.", data=f"remove_{hitID}"))],
-        [(Button.inline("Ignore", data=f"ignore{hitID}"))]
-    ]
-    if Var.repotgroupId:
-        await borg.send_message(Var.repotgroupId, msg, buttons=button)
-    else:
-        await borg.send_message(Var.ownerIDs[0], msg, buttons=button)
+    # try:
+    if True:
+        hit = get_hit_by_id(hitID)
+        email, pwd = hit.hit.split(":", maxsplit = 1)
+        entity = await borg.get_entity(event.chat_id)
+        username = entity.username
+        if username:
+            username = "@" + username
+        msg = reportMsg.format(
+            hitID = hitID,
+            email = email,
+            pwd = pwd,
+            combo = hit.hit,
+            userID = event.chat_id,
+            first_name = entity.first_name,
+            last_name = entity.last_name,
+            username = username
+        )
+        button = [
+            [(Button.inline("Remove Now", data=f"remove_{hitID}"))],
+            [(Button.inline("Ignore", data="ignore"))]
+        ]
+        if Var.repotgroupId:
+            await borg.send_message(Var.repotgroupId, msg, buttons=button)
+        else:
+            await borg.send_message(Var.ownerIDs[0], msg, buttons=button)
+    # except:
+    #     pass
     await event.answer("Report Sent to Admins!", alert=True)
-    await borg.edit_message(event.chat_id, event.query.msg_id, buttons = None)
-# @borg.on(events.callbackquery.CallbackQuery(data=re.compile(b"report_(.*)")))
-# async def genAcc(event):
-#     hitID = event.data_match.group(1).decode("UTF-8")
-#     # try:
-#     if True:
-#         hit = get_hit_by_id(hitID)
-#         email, pwd = hit.hit.split(":", maxsplit = 1)
-#         entity = await borg.get_entity(event.chat_id)
-#         username = entity.username
-#         if username:
-#             username = "@" + username
-#         msg = reportMsg.format(
-#             hitID = hitID,
-#             email = email,
-#             pwd = pwd,
-#             combo = hit.hit,
-#             userID = event.chat_id,
-#             first_name = entity.first_name,
-#             last_name = entity.last_name,
-#             username = username
-#         )
-#         button = [
-#             [(Button.inline("Remove Now", data=f"remove_{hitID}"))],
-#             [(Button.inline("Ignore", data="ignore"))]
-#         ]
-#         if Var.repotgroupId:
-#             await borg.send_message(Var.repotgroupId, msg, buttons=button)
-#         else:
-#             await borg.send_message(Var.ownerIDs[0], msg, buttons=button)
-#     # except:
-#     #     pass
-#     await event.answer("Report Sent to Admins!", alert=True)
-#     newButton = [Button.url("Authentication error?", "https://bit.ly/35gd38D")]
-#     await borg.edit_message(event.chat_id, event.query.msg_id, buttons = newButton)
+    newButton = [Button.url("Authentication error?", "https://bit.ly/35gd38D")]
+    await borg.edit_message(event.chat_id, event.query.msg_id, buttons = newButton)
 
 
 @borg.on(events.callbackquery.CallbackQuery(data=re.compile(b"remove_(.*)")))
