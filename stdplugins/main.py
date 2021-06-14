@@ -227,7 +227,6 @@ async def my_event_handler(event):
             if '/reset' == event.raw_text.lower():
                 resetMsg = await borg.send_message(event.chat_id, "Resetting...")
                 await reset(resetMsg) 
-                await borg.send_message(event.chat_id, "Done")   
             if '/search' == event.raw_text.lower()[0:7]:
                 try:
                     ID = int(event.raw_text.lower()[7:])
@@ -315,6 +314,8 @@ async def reset(resetMsg = None):
             except:
                 pass
     resetDailyLimit()
+    if resetMsg:
+        await borg.edit_message(resetMsg.chat_id, resetMsg.id, "Done")   
     
 
 
