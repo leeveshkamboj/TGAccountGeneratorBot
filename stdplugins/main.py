@@ -17,9 +17,7 @@ channelId = -1001313593468
 channelName = "@NordVpn_1"
 # hitChannelId = -1001296437520
 hitChannelId = 0
-repotGroupID = -1001206527793
-ownerIDs = [630654925, 1111214141]
-maintenanceMode = False
+repotGroupID = -100120652779
 dailyLimit = 3
 botToken = "1202514912:AAE2yMJiiRTbP2nXYhp2ksHPjJYe5GlVCxo"
 
@@ -67,14 +65,14 @@ async def my_event_handler(event):
         entity = await borg.get_entity(event.chat_id)
         first_name = entity.first_name
         if "/gen" == event.raw_text.lower():
-            if maintenanceMode and event.chat_id not in ownerIDs:
+            if Var.maintenanceMode and event.chat_id not in Var.ownerIDs:
                 await borg.send_message(event.chat_id, "Bot is under maintenance.")
                 return
             user = get_user(event.chat_id)
             if not user:
                 add_user(event.chat_id)
             else:
-                if int(user.dailylimit) >= dailyLimit and event.chat_id not in ownerIDs:
+                if int(user.dailylimit) >= dailyLimit and event.chat_id not in Var.ownerIDs:
                     await borg.send_message(event.chat_id, "Daily limit exceeded.")
                     return
                 elif int(user.dailylimit) != dailyLimit:
@@ -110,7 +108,7 @@ Do /gen to generate an account
 ❤️Brought to You By @PandaZnetwork || Made by @HeisenbergTheDanger❤️**"""
             await borg.send_message(event.chat_id, msg)
             return
-        if event.chat_id in ownerIDs:
+        if event.chat_id in Var.ownerIDs:
             if '/count' == event.raw_text.lower():
                 userList = get_all_users()
                 await borg.send_message(event.chat_id, f"{len(userList)} users.")
@@ -300,7 +298,7 @@ async def reset():
             # print(e)
             pass
     msg = "Bot reseted."
-    url = f"https://api.telegram.org/bot{botToken}/sendMessage?chat_id={ownerIDs[0]}&text={msg}"
+    url = f"https://api.telegram.org/bot{botToken}/sendMessage?chat_id={Var.ownerIDs[0]}&text={msg}"
     resetDailyLimit()
     requests.get(url)
 
@@ -334,7 +332,7 @@ async def genAcc(event):
         if repotGroupID:
             await borg.send_message(repotGroupID, msg, buttons=button)
         else:
-            await borg.send_message(ownerIDs[0], msg, buttons=button)
+            await borg.send_message(Var.ownerIDs[0], msg, buttons=button)
     except:
         pass
     await event.answer("Report Sent to Admins!", alert=True)
@@ -357,7 +355,7 @@ async def genAcc(event):
         if repotGroupID:
             await borg.send_message(repotGroupID, f"Error - {e}")
         else:
-            await borg.send_message(ownerIDs[0], f"Error - {e}")
+            await borg.send_message(Var.ownerIDs[0], f"Error - {e}")
 
 
 @borg.on(events.callbackquery.CallbackQuery(data=re.compile(b"ignore")))
