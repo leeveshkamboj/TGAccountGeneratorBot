@@ -320,7 +320,10 @@ async def genAcc(event):
             last_name = entity.last_name,
             username = username
         )
-        button = [(Button.inline("Remove Now.", data=f"remove_{hitID}"))]
+        button = [
+            [(Button.inline("Remove Now.", data=f"remove_{hitID}"))],
+            [(Button.inline("Ignore", data=f"ignore"))]
+        ]
         if repotGroupID:
             await borg.send_message(repotGroupID, msg, buttons=button)
         else:
@@ -347,6 +350,11 @@ async def genAcc(event):
             await borg.send_message(repotGroupID, f"Error - {e}")
         else:
             await borg.send_message(ownerIDs[0], f"Error - {e}")
+
+
+@borg.on(events.callbackquery.CallbackQuery(data=re.compile(b"ignore")))
+async def genAcc(event):
+    await event.delete()
 
 
 
