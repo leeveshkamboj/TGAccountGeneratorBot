@@ -1,5 +1,6 @@
 ﻿from telethon import events, Button
 from uniborg.util import admin_cmd
+from uniborg.config import Var
 import time
 import os
 import random
