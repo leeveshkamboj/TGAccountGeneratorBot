@@ -49,6 +49,7 @@ ID => `{userID}`
 First Name => `{first_name}`
 Last Name => `{last_name}`
 Username => {username}
+Daily Limit => {dailyLimit}/{TotalDailyLimit}
 """
 
 ####################################################################
@@ -326,6 +327,7 @@ async def genAcc(event):
         email, pwd = hit.hit.split(":", maxsplit = 1)
         entity = await borg.get_entity(event.chat_id)
         username = entity.username
+        user = get_user(ID)
         if username:
             username = "@" + username
         msg = reportMsg.format(
@@ -336,7 +338,9 @@ async def genAcc(event):
             userID = event.chat_id,
             first_name = entity.first_name,
             last_name = entity.last_name,
-            username = username
+            username = username,
+            dailyLimit = user.dailylimit,
+            TotalDailyLimit = Var.dailyLimit
         )
         button = [
             [(Button.inline("Remove Now", data=f"remove_{hitID}"))],
