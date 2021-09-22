@@ -291,7 +291,6 @@ async def my_event_handler(event):
                     await bot.edit_message(event.chat_id, bMsg.id, f"Successfully sent to {succ} users with {err} errors.")
             except Exception as error:
                 await bot.send_message(event.chat_id, "Reply to a text msg")
-                # print(error)
     if 'yo' == event.raw_text.lower():
         await event.reply('yo')
         return
@@ -359,6 +358,9 @@ async def genAcc(event):
 
 @bot.on(events.callbackquery.CallbackQuery(data=re.compile(b"remove_(.*)")))
 async def genAcc(event):
+    if event.query.user_id not in Var.ownerIDs:
+        await event.answer("Access Denied")
+        return
     hitID = event.data_match.group(1).decode("UTF-8")
     try:
         if get_hit_by_id(hitID):
@@ -377,6 +379,9 @@ async def genAcc(event):
 
 @bot.on(events.callbackquery.CallbackQuery(data=re.compile(b"ignore")))
 async def genAcc(event):
+    if event.query.user_id not in Var.ownerIDs:
+        await event.answer("Access Denied")
+        return
     await event.delete()
 
 
