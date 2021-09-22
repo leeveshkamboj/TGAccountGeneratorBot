@@ -1,0 +1,53 @@
+{
+    "name": "Account Generator Bot",
+    "description": "Bot for generating premium account",
+    "keywords": [
+      "telegram",
+      "bot",
+      "modular",
+      "productivity"
+    ],
+    "repository": "https://github.com/leeveshkamboj/TGAccountGeneratorBot",
+    "env": {
+      "API_ID": {
+        "description": "Get this value from my.telegram.org! Please do not steal",
+        "value": ""
+      },
+      "API_HASH": {
+        "description": "Get this value from my.telegram.org! Please do not steal",
+        "value": ""
+        },
+      "TOKEN": {
+        "description": "Obtain a Telegram bot token by contacting @BotFather",
+        "value": ""
+      },
+      "OWNER_IDS": {
+        "description": "ID of owners separated by '|' . You can get it from @userinfobot"
+      },
+      "ACCOUNT_NAME": {
+        "description": "Name for account of which you are generating account."
+      },
+      "DAILY_LIMIT": {
+        "description": "Daily limit",
+        "value": 3
+      },
+      "REPORT_GROUP_ID": {
+        "description": "ID of group to send reportsed accounts."
+      },
+      "CHANNEL_ID": {
+        "description": "ID of channel, you want people to join before using bot.",
+        "required": false
+      },
+      "CHANNEL_NAME": {
+        "description": "Username of channel, you want people to join before using bot.",
+        "required": false
+      }
+    },
+    "addons": [{
+      "plan": "heroku-postgresql"
+    }],
+    "buildpacks": [
+        {
+            "url": "heroku/python"
+        }]
+  }
