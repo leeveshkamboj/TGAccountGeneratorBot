@@ -76,14 +76,15 @@ async def my_event_handler(event):
             add_user(event.chat_id)
     except:
         pass
-    try:
-        perm = await bot.get_permissions(Var.channelId, event.chat_id)
-    except:
-        await bot.send_message(event.chat_id, joinMsg.format(channelName = Var.channelName))
-        return
-    if not (perm.has_default_permissions or perm.is_admin):
-        await bot.send_message(event.chat_id, joinMsg.format(channelName = Var.channelName))
-        return
+    if Var.channelId:
+        try:
+            perm = await bot.get_permissions(Var.channelId, event.chat_id)
+        except:
+            await bot.send_message(event.chat_id, joinMsg.format(channelName = Var.channelName))
+            return
+        if not (perm.has_default_permissions or perm.is_admin):
+            await bot.send_message(event.chat_id, joinMsg.format(channelName = Var.channelName))
+            return
     entity = await bot.get_entity(event.chat_id)
     first_name = entity.first_name
     if "/gen" == event.raw_text.lower():
@@ -345,8 +346,8 @@ async def genAcc(event):
             [(Button.inline("Remove Now", data=f"remove_{hitID}"))],
             [(Button.inline("Ignore", data="ignore"))]
         ]
-        if Var.repotGroupId:
-            await bot.send_message(Var.repotGroupId, msg, buttons=button)
+        if Var.reportGroupId:
+            await bot.send_message(Var.reportGroupId, msg, buttons=button)
         else:
             await bot.send_message(Var.ownerIDs[0], msg, buttons=button)
     except:
@@ -371,8 +372,8 @@ async def genAcc(event):
             await event.answer("Hits already removed.", alert=True)
             await event.delete()
     except Exception as e:
-        if Var.repotGroupId:
-            await bot.send_message(Var.repotGroupId, f"Error - {e}")
+        if Var.reportGroupId:
+            await bot.send_message(Var.reportGroupId, f"Error - {e}")
         else:
             await bot.send_message(Var.ownerIDs[0], f"Error - {e}")
 
