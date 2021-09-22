@@ -14,7 +14,7 @@ from apscheduler.schedulers.asyncio import AsyncIOScheduler
 
 ####################################################################
 
-bot = TelegramClient('bot', Config.api_id, Config.api_hash).start(bot_token=Config.token)
+bot = TelegramClient('bot', Var.api_id, Var.api_hash).start(bot_token=Var.token)
 
 ####################################################################
 
