@@ -10,9 +10,9 @@ A Telethon and Postgres based Telgram Bot for generating premium accounts.
 
 # Example
 
-[@NordGenerator_Robot](https://t.me/nordgenerator_robot)
+[@NordGenerator_Robot](https://t.me/NordGenerator_Robot)
 
 
 # Contact
 
-Telegram username - @HeisenbergTheDanger
+Telegram username - [@HeisenbergTheDanger](https://t.me/HeisenbergTheDanger)
