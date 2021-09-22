@@ -25,7 +25,7 @@ joinMsg = """Hello Dear ❤️
 [+] After Joining Channel, Come Back To Bot And Click On /start"""
 
 
-genMsg = """𝙃𝙚𝙧𝙚 𝙄𝙨 𝙔𝙤𝙪𝙧 NordVPN 𝘼𝙘𝙘𝙤𝙪𝙣𝙩
+genMsg = """𝙃𝙚𝙧𝙚 𝙄𝙨 𝙔𝙤𝙪𝙧 {account} 𝘼𝙘𝙘𝙤𝙪𝙣𝙩
 
 𝙀𝙢𝙖𝙞𝙡: `{email}`
 𝙋𝙖𝙨𝙨: `{pwd}`
@@ -109,7 +109,7 @@ async def my_event_handler(event):
                 [Button.url("Authentication error?", "https://t.me/nordbypass")],
                 [(Button.inline("Report not working", data=f"report_{hitID}"))]
             ]
-            await bot.send_message(event.chat_id, genMsg.format(email = hit[0], pwd = hit[1], name = first_name, channelName = Var.channelName), buttons = button)
+            await bot.send_message(event.chat_id, genMsg.format(account = Var.account_name, email = hit[0], pwd = hit[1], name = first_name, channelName = Var.channelName), buttons = button)
         else:
             await bot.send_message(event.chat_id, "No account available right now.")
     if '/start' == event.raw_text.lower():
