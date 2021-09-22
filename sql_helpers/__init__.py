@@ -5,8 +5,9 @@ from sqlalchemy.orm import sessionmaker, scoped_session
 
 
 DB_URI = os.environ.get("DATABASE_URL", None)
+
 if DB_URI:
-    DB_URI.replace('postgres://', 'postgresql://')
+    DB_URI = DB_URI.replace('postgres://', 'postgresql://')
 
 
 def start() -> scoped_session:
