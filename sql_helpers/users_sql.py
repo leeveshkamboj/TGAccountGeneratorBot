@@ -1,5 +1,5 @@
 from sqlalchemy import Column, String
-from stdplugins.sql_helpers import SESSION, BASE
+from sql_helpers import SESSION, BASE
 
 
 
