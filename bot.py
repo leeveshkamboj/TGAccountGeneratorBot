@@ -102,7 +102,6 @@ async def my_event_handler(event):
         accounts = get_all_hits()
         if accounts:
             hit = random.choice(accounts)
-            print(hit)
             hitID = hit.hitID
             hit = hit.hit.split(":")
             
