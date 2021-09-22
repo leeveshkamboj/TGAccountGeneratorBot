@@ -6,8 +6,7 @@ class Var(object):
     token = os.environ.get("TOKEN", None)
     ownerIDs = os.environ.get("OWNER_IDS", [])
     if ownerIDs:
-        ids = ownerIDs.split("|")
-        ownerIDs = [int(ID) for ID in ids]
+        ownerIDs = [int(ID) for ID in ownerIDs.split("|")]
     channelId = int(os.environ.get("CHANNEL_ID", 0))
     groupId = int(os.environ.get("GROUP_ID", 0))
     repotGroupId = int(os.environ.get("REPORT_GROUP_ID", 0))
