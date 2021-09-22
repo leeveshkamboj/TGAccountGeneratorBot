@@ -4,8 +4,8 @@ from config import Var
 import time
 import os
 import random
-from stdplugins.sql_helpers.users_sql import get_user, add_user, remUser, get_all_users, updateLimit, resetDailyLimit, exceededLimitUsers
-from stdplugins.sql_helpers.hits_sql import hitExists, addHit, remHit, get_all_hits, get_hit_by_id
+from sql_helpers.users_sql import get_user, add_user, remUser, get_all_users, updateLimit, resetDailyLimit, exceededLimitUsers
+from sql_helpers.hits_sql import hitExists, addHit, remHit, get_all_hits, get_hit_by_id
 import io
 import requests
 import re
