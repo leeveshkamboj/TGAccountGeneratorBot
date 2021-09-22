@@ -25,7 +25,7 @@
         "description": "ID of owners separated by '|' . You can get it from @userinfobot"
       },
       "ACCOUNT_NAME": {
-        "description": "Name for account of which you are generating account."
+        "description": "Name of site of which you are generating account."
       },
       "DAILY_LIMIT": {
         "description": "Daily limit",
