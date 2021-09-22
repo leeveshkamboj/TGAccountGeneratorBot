@@ -391,3 +391,4 @@ scheduler.start()
 
 
 print("Bot Started.")
+bot.run_until_disconnected()
