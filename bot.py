@@ -68,9 +68,6 @@ Do /gen to generate an account
 
 ####################################################################
 
-def genAccount(_list):
-    return _list[random.randint(0, len(_list) - 1)]
-
 
 @bot.on(events.NewMessage(func=lambda e: e.is_private))
 async def my_event_handler(event):
@@ -104,7 +101,7 @@ async def my_event_handler(event):
                 updateLimit(event.chat_id)
         accounts = get_all_hits()
         if accounts:
-            hit = genAccount(accounts)
+            hit = random.choices(accounts)
             hitID = hit.hitID
             hit = hit.hit.split(":")
             
