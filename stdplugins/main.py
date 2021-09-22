@@ -81,220 +81,220 @@ async def my_event_handler(event):
     except:
         await borg.send_message(event.chat_id, joinMsg.format(channelName = Var.channelName))
         return
-    if perm.has_default_permissions or perm.is_admin:
-        entity = await borg.get_entity(event.chat_id)
-        first_name = entity.first_name
-        if "/gen" == event.raw_text.lower():
-            if Var.maintenanceMode and event.chat_id not in Var.ownerIDs:
-                await borg.send_message(event.chat_id, "Bot is under maintenance.")
-                return
-            user = get_user(event.chat_id)
-            if not user:
-                add_user(event.chat_id)
-            else:
-                if int(user.dailylimit) >= Var.dailyLimit and event.chat_id not in Var.ownerIDs:
-                    await borg.send_message(event.chat_id, "Daily limit exceeded.")
-                    return
-                elif int(user.dailylimit) != Var.dailyLimit:
-                    updateLimit(event.chat_id)
-            accounts = get_all_hits()
-            if accounts:
-                hit = genAccount(accounts)
-                hitID = hit.hitID
-                hit = hit.hit.split(":")
-                
-                button = [
-                    [Button.url("Authentication error?", "https://t.me/nordbypass")],
-                    [(Button.inline("Report not working", data=f"report_{hitID}"))]
-                ]
-                await borg.send_message(event.chat_id, genMsg.format(email = hit[0], pwd = hit[1], name = first_name), buttons = button)
-            else:
-                await borg.send_message(event.chat_id, "No account available right now.")
-        if '/start' == event.raw_text.lower():
-            await borg.send_message(event.chat_id, startMsg.format(name = first_name))
+    if not (perm.has_default_permissions or perm.is_admin):
+        await borg.send_message(event.chat_id, joinMsg.format(channelName = Var.channelName))
+        return
+    entity = await borg.get_entity(event.chat_id)
+    first_name = entity.first_name
+    if "/gen" == event.raw_text.lower():
+        if Var.maintenanceMode and event.chat_id not in Var.ownerIDs:
+            await borg.send_message(event.chat_id, "Bot is under maintenance.")
             return
-        if event.chat_id in Var.ownerIDs:
-            if '/count' == event.raw_text.lower():
-                userList = get_all_users()
-                await borg.send_message(event.chat_id, f"{len(userList)} users.")
-            if '/hits' == event.raw_text.lower():
-                hitList = get_all_hits()
-                if len(hitList) == 0:
-                    msg = "Database is empty."
-                else:
-                    msg = "**Hits-**\n\n"
-                    for hit in hitList:
-                        msg += (f'{hit.hit}\n')
-                    msg += f'\n**Total {len(hitList)} hits.**'
-                if len(msg) > 4096:
-                    with io.BytesIO(str.encode(msg)) as out_file:
-                        out_file.name = "hits.txt"
-                        await borg.send_file(
-                            event.chat_id,
-                            out_file,
-                            force_document=True,
-                            allow_cache=False,
-                            caption="List of hits."
-                        )
-                    return
-                else:
-                    await borg.send_message(event.chat_id, msg)
-                    return
-            if '/users' == event.raw_text.lower():
-                userList = get_all_users()
-                if len(userList) == 0:
-                    msg = "No user found"
-                else:
-                    msg = "**Users:-**\n\n"
-                    for user in userList:
-                        msg += (f'ID - {user.userId}, Daily limit - {user.dailylimit}/{Var.dailyLimit}\n')
-                    msg += f'\n**Total {len(userList)} user.**'
-                if len(msg) > 4096:
-                    with io.BytesIO(str.encode(msg)) as out_file:
-                        out_file.name = "users.txt"
-                        await borg.send_file(
-                            event.chat_id,
-                            out_file,
-                            force_document=True,
-                            allow_cache=False,
-                            caption="List of users."
-                        )
-                    return
-                else:
-                    await borg.send_message(event.chat_id, msg)
-                    return
-            if '/addhits' == event.raw_text.lower():
-                if event.is_reply:
-                    try:
-                        previous_message = await event.get_reply_message()
-                        response = previous_message
-                    except:
-                        pass
-                else:
-                    async with borg.conversation(event.chat_id) as conv:
-                        await conv.send_message('Send hits you want to add.')
-                        try:
-                            response = await conv.get_response()
-                        except:
-                            return
-                        if response.text[0] == "/":
-                            return
-                hits = response.raw_text.split("\n")
-                count = 0
-                for hit in hits:
-                    hit=hit.strip()
-                    hit = hit.split(" ")[0]
-                    if ":" in hit:
-                        if hit[0] == "[":
-                            mail, pwd = hit.split("):", maxsplit = 1)
-                            hit = mail[mail.index("[") + 1 : mail.index("]")] + ":" + pwd
-                        hit = hit.split("|")[0].split(" ")[0]
-                        if not hitExists(hit):
-                            addHit(hit)
-                            count += 1
-                await borg.send_message(event.chat_id, f"{count} Hit(s) added.")
-            if '/deletehits' == event.raw_text.lower():
+        user = get_user(event.chat_id)
+        if not user:
+            add_user(event.chat_id)
+        else:
+            if int(user.dailylimit) >= Var.dailyLimit and event.chat_id not in Var.ownerIDs:
+                await borg.send_message(event.chat_id, "Daily limit exceeded.")
+                return
+            elif int(user.dailylimit) != Var.dailyLimit:
+                updateLimit(event.chat_id)
+        accounts = get_all_hits()
+        if accounts:
+            hit = genAccount(accounts)
+            hitID = hit.hitID
+            hit = hit.hit.split(":")
+            
+            button = [
+                [Button.url("Authentication error?", "https://t.me/nordbypass")],
+                [(Button.inline("Report not working", data=f"report_{hitID}"))]
+            ]
+            await borg.send_message(event.chat_id, genMsg.format(email = hit[0], pwd = hit[1], name = first_name), buttons = button)
+        else:
+            await borg.send_message(event.chat_id, "No account available right now.")
+    if '/start' == event.raw_text.lower():
+        await borg.send_message(event.chat_id, startMsg.format(name = first_name))
+        return
+    if event.chat_id in Var.ownerIDs:
+        if '/count' == event.raw_text.lower():
+            userList = get_all_users()
+            await borg.send_message(event.chat_id, f"{len(userList)} users.")
+        if '/hits' == event.raw_text.lower():
+            hitList = get_all_hits()
+            if len(hitList) == 0:
+                msg = "Database is empty."
+            else:
+                msg = "**Hits-**\n\n"
+                for hit in hitList:
+                    msg += (f'{hit.hit}\n')
+                msg += f'\n**Total {len(hitList)} hits.**'
+            if len(msg) > 4096:
+                with io.BytesIO(str.encode(msg)) as out_file:
+                    out_file.name = "hits.txt"
+                    await borg.send_file(
+                        event.chat_id,
+                        out_file,
+                        force_document=True,
+                        allow_cache=False,
+                        caption="List of hits."
+                    )
+                return
+            else:
+                await borg.send_message(event.chat_id, msg)
+                return
+        if '/users' == event.raw_text.lower():
+            userList = get_all_users()
+            if len(userList) == 0:
+                msg = "No user found"
+            else:
+                msg = "**Users:-**\n\n"
+                for user in userList:
+                    msg += (f'ID - {user.userId}, Daily limit - {user.dailylimit}/{Var.dailyLimit}\n')
+                msg += f'\n**Total {len(userList)} user.**'
+            if len(msg) > 4096:
+                with io.BytesIO(str.encode(msg)) as out_file:
+                    out_file.name = "users.txt"
+                    await borg.send_file(
+                        event.chat_id,
+                        out_file,
+                        force_document=True,
+                        allow_cache=False,
+                        caption="List of users."
+                    )
+                return
+            else:
+                await borg.send_message(event.chat_id, msg)
+                return
+        if '/addhits' == event.raw_text.lower():
+            if event.is_reply:
+                try:
+                    previous_message = await event.get_reply_message()
+                    response = previous_message
+                except:
+                    pass
+            else:
                 async with borg.conversation(event.chat_id) as conv:
-                    await conv.send_message('Send hits you want to remove.')
+                    await conv.send_message('Send hits you want to add.')
                     try:
                         response = await conv.get_response()
                     except:
                         return
                     if response.text[0] == "/":
                         return
-                    hits = response.raw_text.split("\n")
-                    count = 0
-                    for hit in hits:
-                        hit = hit.strip()
-                        hit = hit.split(" ")[0]
-                        if ":" in hit:
-                            if hit[0] == "[":
-                                mail, pwd = hit.split("):", maxsplit = 1)
-                                hit = mail[mail.index("[") + 1 : mail.index("]")] + ":" + pwd
-                            hitID = hitExists(hit).hitID
-                            if hitID:
-                                remHit(hitID)
-                                count += 1
-                    await conv.send_message(f"{count} Hit(s) removed.")
-            if '/cleanhits' == event.raw_text.lower():
-                hitList = get_all_hits()
-                for hit in hitList:
-                    try:
-                        remHit(hit.hitID)
-                    except:
-                        pass
-                await borg.send_message(event.chat_id, "Cleaned...")
-            if '/reset' == event.raw_text.lower():
-                resetMsg = await borg.send_message(event.chat_id, "Resetting...")
-                await reset(resetMsg) 
-            if '/search' == event.raw_text.lower()[0:7]:
+            hits = response.raw_text.split("\n")
+            count = 0
+            for hit in hits:
+                hit=hit.strip()
+                hit = hit.split(" ")[0]
+                if ":" in hit:
+                    if hit[0] == "[":
+                        mail, pwd = hit.split("):", maxsplit = 1)
+                        hit = mail[mail.index("[") + 1 : mail.index("]")] + ":" + pwd
+                    hit = hit.split("|")[0].split(" ")[0]
+                    if not hitExists(hit):
+                        addHit(hit)
+                        count += 1
+            await borg.send_message(event.chat_id, f"{count} Hit(s) added.")
+        if '/deletehits' == event.raw_text.lower():
+            async with borg.conversation(event.chat_id) as conv:
+                await conv.send_message('Send hits you want to remove.')
                 try:
-                    ID = int(event.raw_text.lower()[7:])
+                    response = await conv.get_response()
                 except:
-                    await borg.send_message(event.chat_id, "Error")
                     return
-                try:
-                    entity = await borg.get_entity(ID)
-                except:
-                    await borg.send_message(event.chat_id, "Not found")
+                if response.text[0] == "/":
                     return
-                user = get_user(ID)
-                msg = f"ID = {ID}\n"
-                msg += f"First name = {entity.first_name}\n"
-                msg += f"Last name = {entity.last_name}\n"
-                if entity.username:
-                    msg += f"Username = @{entity.username}\n"
-                else:
-                    msg += "Username = None\n"
-                if user:
-                    msg += f"Daily Limit = {user.dailylimit}/{Var.dailyLimit}"
-                await borg.send_message(event.chat_id, msg)
-            elif event.raw_text == "/broadcast":
-                try:
-                    previous_message = await event.get_reply_message()
-                    if previous_message.media:
-                        await borg.send_message(event.chat_id, "Reply to a text msg")
-                        time.sleep(1)
-                        await event.delete()
-                        return
-                    try:
-                        msg = previous_message.text
-                    except:
-                        await borg.send_message(event.chat_id, event.message.id, "Reply to a text msg")
-                        time.sleep(1)
-                        await event.delete()
-                        return
-                    userList = get_all_users()
-                    if len(userList) == 0:
-                        msg = "No user found"
-                    else:
-                        bMsg = await borg.send_message(event.chat_id, f"Sending to {len(userList)} users.")
-                        err = 0 
-                        succ = 0
-                        count = 0
-                        errs = ""
-                        for user in userList:
-                            try:
-                                await borg.send_message(int(user.userId), msg)
-                                succ += 1
-                            except Exception as e:
-                                err += 1
-                                errs += f"Userid - {user.userId} Error - {e}\n"
+                hits = response.raw_text.split("\n")
+                count = 0
+                for hit in hits:
+                    hit = hit.strip()
+                    hit = hit.split(" ")[0]
+                    if ":" in hit:
+                        if hit[0] == "[":
+                            mail, pwd = hit.split("):", maxsplit = 1)
+                            hit = mail[mail.index("[") + 1 : mail.index("]")] + ":" + pwd
+                        hitID = hitExists(hit).hitID
+                        if hitID:
+                            remHit(hitID)
                             count += 1
-                            percents = round(100.0 * count / float(len(userList)), 1)
-                            try:
-                                await borg.edit_message(event.chat_id, bMsg.id, f"Sending... [{percents}%]\n{err} error(s) till now.")
-                            except:
-                                pass
-                        await borg.edit_message(event.chat_id, bMsg.id, f"Successfully sent to {succ} users with {err} errors.")
-                except Exception as error:
+                await conv.send_message(f"{count} Hit(s) removed.")
+        if '/cleanhits' == event.raw_text.lower():
+            hitList = get_all_hits()
+            for hit in hitList:
+                try:
+                    remHit(hit.hitID)
+                except:
+                    pass
+            await borg.send_message(event.chat_id, "Cleaned...")
+        if '/reset' == event.raw_text.lower():
+            resetMsg = await borg.send_message(event.chat_id, "Resetting...")
+            await reset(resetMsg) 
+        if '/search' == event.raw_text.lower()[0:7]:
+            try:
+                ID = int(event.raw_text.lower()[7:])
+            except:
+                await borg.send_message(event.chat_id, "Error")
+                return
+            try:
+                entity = await borg.get_entity(ID)
+            except:
+                await borg.send_message(event.chat_id, "Not found")
+                return
+            user = get_user(ID)
+            msg = f"ID = {ID}\n"
+            msg += f"First name = {entity.first_name}\n"
+            msg += f"Last name = {entity.last_name}\n"
+            if entity.username:
+                msg += f"Username = @{entity.username}\n"
+            else:
+                msg += "Username = None\n"
+            if user:
+                msg += f"Daily Limit = {user.dailylimit}/{Var.dailyLimit}"
+            await borg.send_message(event.chat_id, msg)
+        elif event.raw_text == "/broadcast":
+            try:
+                previous_message = await event.get_reply_message()
+                if previous_message.media:
                     await borg.send_message(event.chat_id, "Reply to a text msg")
-                    # print(error)
-        if 'yo' == event.raw_text.lower():
-            await event.reply('yo')
-            return
-    else:
-        await borg.send_message(event.chat_id, joinMsg.format(channelName = Var.channelName))
+                    time.sleep(1)
+                    await event.delete()
+                    return
+                try:
+                    msg = previous_message.text
+                except:
+                    await borg.send_message(event.chat_id, event.message.id, "Reply to a text msg")
+                    time.sleep(1)
+                    await event.delete()
+                    return
+                userList = get_all_users()
+                if len(userList) == 0:
+                    msg = "No user found"
+                else:
+                    bMsg = await borg.send_message(event.chat_id, f"Sending to {len(userList)} users.")
+                    err = 0 
+                    succ = 0
+                    count = 0
+                    errs = ""
+                    for user in userList:
+                        try:
+                            await borg.send_message(int(user.userId), msg)
+                            succ += 1
+                        except Exception as e:
+                            err += 1
+                            errs += f"Userid - {user.userId} Error - {e}\n"
+                        count += 1
+                        percents = round(100.0 * count / float(len(userList)), 1)
+                        try:
+                            await borg.edit_message(event.chat_id, bMsg.id, f"Sending... [{percents}%]\n{err} error(s) till now.")
+                        except:
+                            pass
+                    await borg.edit_message(event.chat_id, bMsg.id, f"Successfully sent to {succ} users with {err} errors.")
+            except Exception as error:
+                await borg.send_message(event.chat_id, "Reply to a text msg")
+                # print(error)
+    if 'yo' == event.raw_text.lower():
+        await event.reply('yo')
+        return
 
 async def reset(resetMsg = None):
     msg = "Limit Has Been Reset , You can Generate Your Accounts Now !"
