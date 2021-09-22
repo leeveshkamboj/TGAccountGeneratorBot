@@ -2,6 +2,12 @@
 
 A Telethon and Postgres based Telgram Bot for generating premium accounts.
 
+# Features:-
+* Accounts are stored in database.
+* Daily Limit can be set.
+* Automatically resets daily limit.
+* Users can report if account is not working.
+* Can broadcast a message to all users.
 
 # Deploy on heroku
 
