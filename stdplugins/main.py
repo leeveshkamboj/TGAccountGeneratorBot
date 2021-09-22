@@ -399,3 +399,5 @@ async def my_event_handler(event):
 scheduler = AsyncIOScheduler(timezone="Asia/Kolkata")
 scheduler.add_job(reset, 'cron', hour=0)
 scheduler.start()
+
+print("Bot Started.")
