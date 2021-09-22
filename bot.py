@@ -32,7 +32,7 @@ genMsg = """𝙃𝙚𝙧𝙚 𝙄𝙨 𝙔𝙤𝙪𝙧 NordVPN 𝘼𝙘𝙘𝙤�
 𝙂𝙚𝙣𝙚𝙧𝙖𝙩𝙚𝙙 𝘽𝙮: **{name}**
 
 𝙏𝙝𝙖𝙣𝙠 𝙮𝙤𝙪 𝙛𝙤𝙧 𝙪𝙨𝙞𝙣𝙜 𝙢𝙚!
-❤️𝙎𝙝𝙖𝙧𝙚 & 𝙎𝙪𝙥𝙥𝙤𝙧𝙩 **@nordvpn_1**❤️"""
+❤️𝙎𝙝𝙖𝙧𝙚 & 𝙎𝙪𝙥𝙥𝙤𝙧𝙩 **{channelName}**❤️"""
 
 
 ####################################################################
@@ -112,7 +112,7 @@ async def my_event_handler(event):
                 [Button.url("Authentication error?", "https://t.me/nordbypass")],
                 [(Button.inline("Report not working", data=f"report_{hitID}"))]
             ]
-            await bot.send_message(event.chat_id, genMsg.format(email = hit[0], pwd = hit[1], name = first_name), buttons = button)
+            await bot.send_message(event.chat_id, genMsg.format(email = hit[0], pwd = hit[1], name = first_name, channelName = channelName), buttons = button)
         else:
             await bot.send_message(event.chat_id, "No account available right now.")
     if '/start' == event.raw_text.lower():
